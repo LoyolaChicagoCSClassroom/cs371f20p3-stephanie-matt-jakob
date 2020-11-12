@@ -1,0 +1,130 @@
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:3:19: object parsing is not a member of package util[0m[0J
+[0m[[0m[31merror[0m] [0m[0mimport scala.util.parsing.combinator.JavaTokenParsers[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                  ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:6:33: not found: type JavaTokenParsers[0m[0J
+[0m[[0m[31merror[0m] [0m[0mobject CombinatorParser extends JavaTokenParsers {[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                                ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorCalculator.scala:7:35: value parseAll is not a member of object edu.luc.cs.laufer.cs371.expressions.CombinatorParser[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    val result = CombinatorParser.parseAll(CombinatorParser.expr, input)[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                                  ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:9:13: not found: type Parser[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def expr: Parser[Expr] =[0m[0J
+[0m[[0m[31merror[0m] [0m[0m            ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:18:13: not found: type Parser[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def term: Parser[Expr] =[0m[0J
+[0m[[0m[31merror[0m] [0m[0m            ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:28:15: not found: type Parser[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def factor: Parser[Expr] = ([0m[0J
+[0m[[0m[31merror[0m] [0m[0m              ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:29:5: not found: value wholeNumber[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    wholeNumber ^^ { case s => Constant(s.toInt) }[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:30:11: value ~> is not a member of String[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    | "+" ~> factor ^^ { case e => e }[0m[0J
+[0m[[0m[31merror[0m] [0m[0m          ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:31:11: value ~> is not a member of String[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    | "-" ~> factor ^^ { case e => UMinus(e) }[0m[0J
+[0m[[0m[31merror[0m] [0m[0m          ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:32:11: value ~ is not a member of String[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    | "(" ~ expr ~ ")" ^^ { case _ ~ e ~ _ => e })[0m[0J
+[0m[[0m[31merror[0m] [0m[0m          ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:32:40: not found: value ~[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    | "(" ~ expr ~ ")" ^^ { case _ ~ e ~ _ => e })[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                                       ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:32:36: not found: value ~[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    | "(" ~ expr ~ ")" ^^ { case _ ~ e ~ _ => e })[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                                   ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegCalculator.scala:3:12: object parboiled2 is not a member of package org[0m[0J
+[0m[[0m[31merror[0m] [0m[0mimport org.parboiled2.ParseError[0m[0J
+[0m[[0m[31merror[0m] [0m[0m           ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegParser.scala:3:12: object parboiled2 is not a member of package org[0m[0J
+[0m[[0m[31merror[0m] [0m[0mimport org.parboiled2._[0m[0J
+[0m[[0m[31merror[0m] [0m[0m           ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegParser.scala:6:49: not found: type Parser[0m[0J
+[0m[[0m[31merror[0m] [0m[0mclass PegParser(val input: ParserInput) extends Parser {[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                                                ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegParser.scala:6:28: not found: type ParserInput[0m[0J
+[0m[[0m[31merror[0m] [0m[0mclass PegParser(val input: ParserInput) extends Parser {[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                           ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegParser.scala:8:19: not found: value rule[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def InputLine = rule { WhiteSpace ~ Expression ~ EOI }[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                  ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegParser.scala:41:20: not found: value rule[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def WhiteSpace = rule { zeroOrMore(WhiteSpaceChar) }[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                   ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegParser.scala:41:27: not found: value zeroOrMore[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def WhiteSpace = rule { zeroOrMore(WhiteSpaceChar) }[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                          ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegParser.scala:39:24: not found: value CharPredicate[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  val WhiteSpaceChar = CharPredicate(" \n\r\t\f")[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                       ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegCalculator.scala:12:27: not found: type ParseError[0m[0J
+[0m[[0m[31merror[0m] [0m[0m      case Failure(error: ParseError) =>[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                          ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegCalculator.scala:14:24: value formatError is not a member of edu.luc.cs.laufer.cs371.expressions.PegParser[0m[0J
+[0m[[0m[31merror[0m] [0m[0m        println(parser.formatError(error))[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                       ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegCalculator.scala:20:17: overloaded method value toFormattedString with alternatives:[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  (e: edu.luc.cs.laufer.cs371.expressions.ast.Expr)String <and>[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  (prefix: String)(e: edu.luc.cs.laufer.cs371.expressions.ast.Expr)String[0m[0J
+[0m[[0m[31merror[0m] [0m[0m cannot be applied to (Any)[0m[0J
+[0m[[0m[31merror[0m] [0m[0m        println(toFormattedString(expr))[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegCalculator.scala:21:39: type mismatch;[0m[0J
+[0m[[0m[31merror[0m] [0m[0m found   : Any[0m[0J
+[0m[[0m[31merror[0m] [0m[0m required: edu.luc.cs.laufer.cs371.expressions.ast.Expr[0m[0J
+[0m[[0m[31merror[0m] [0m[0m        println("It has size " + size(expr) + " and height " + height(expr))[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                                      ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegCalculator.scala:21:71: type mismatch;[0m[0J
+[0m[[0m[31merror[0m] [0m[0m found   : Any[0m[0J
+[0m[[0m[31merror[0m] [0m[0m required: edu.luc.cs.laufer.cs371.expressions.ast.Expr[0m[0J
+[0m[[0m[31merror[0m] [0m[0m        println("It has size " + size(expr) + " and height " + height(expr))[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                                                                      ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegCalculator.scala:22:47: type mismatch;[0m[0J
+[0m[[0m[31merror[0m] [0m[0m found   : Any[0m[0J
+[0m[[0m[31merror[0m] [0m[0m required: edu.luc.cs.laufer.cs371.expressions.ast.Expr[0m[0J
+[0m[[0m[31merror[0m] [0m[0m        println("It evaluates to " + evaluate(expr))[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                                              ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegParser.scala:11:20: not found: value rule[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def Expression = rule {[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                   ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegParser.scala:18:14: not found: value rule[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def Term = rule {[0m[0J
+[0m[[0m[31merror[0m] [0m[0m             ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegParser.scala:26:15: not found: type Rule1[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def Factor: Rule1[Expr] = rule { Number | UnaryPlus | UnaryMinus | Parens }[0m[0J
+[0m[[0m[31merror[0m] [0m[0m              ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegParser.scala:26:29: not found: value rule[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def Factor: Rule1[Expr] = rule { Number | UnaryPlus | UnaryMinus | Parens }[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                            ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegParser.scala:29:16: not found: value rule[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def Number = rule { capture(Digits) ~ WhiteSpace ~> ((s: String) => Constant(s.toInt)) }[0m[0J
+[0m[[0m[31merror[0m] [0m[0m               ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegParser.scala:37:16: not found: value rule[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def Digits = rule { oneOrMore(CharPredicate.Digit) }[0m[0J
+[0m[[0m[31merror[0m] [0m[0m               ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegParser.scala:37:23: not found: value oneOrMore[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def Digits = rule { oneOrMore(CharPredicate.Digit) }[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                      ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegParser.scala:37:33: not found: value CharPredicate[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def Digits = rule { oneOrMore(CharPredicate.Digit) }[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                                ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegParser.scala:29:23: not found: value capture[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def Number = rule { capture(Digits) ~ WhiteSpace ~> ((s: String) => Constant(s.toInt)) }[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                      ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegParser.scala:31:19: not found: value rule[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def UnaryPlus = rule { ws('+') ~ Factor }[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                  ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegParser.scala:43:21: not found: value rule[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def ws(c: Char) = rule { c ~ WhiteSpace }[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                    ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegParser.scala:43:30: value ~ is not a member of Char[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def ws(c: Char) = rule { c ~ WhiteSpace }[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                             ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegParser.scala:33:20: not found: value rule[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def UnaryMinus = rule { ws('-') ~ Factor ~> (UMinus(_: Expr)) }[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                   ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegParser.scala:35:16: not found: value rule[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def Parens = rule { ws('(') ~ Expression ~ ws(')') }[0m[0J
+[0m[[0m[31merror[0m] [0m[0m               ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m40 errors found[0m[0J

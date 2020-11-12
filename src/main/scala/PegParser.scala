@@ -11,8 +11,7 @@ class PegParser(val input: ParserInput) extends Parser {
   def Expression = rule {
     Term ~ zeroOrMore(
       ws('+') ~ Term ~> (Plus(_: Expr, _))
-        | ws('-') ~ Term ~> (Minus(_: Expr, _))
-    )
+        | ws('-') ~ Term ~> (Minus(_: Expr, _)))
   }
 
   /** term ::= factor { { "*" | "/" | "%" } factor }* */
@@ -20,8 +19,7 @@ class PegParser(val input: ParserInput) extends Parser {
     Factor ~ zeroOrMore(
       ws('*') ~ Factor ~> (Times(_: Expr, _))
         | ws('/') ~ Factor ~> (Div(_: Expr, _))
-        | ws('%') ~ Factor ~> (Mod(_: Expr, _))
-    )
+        | ws('%') ~ Factor ~> (Mod(_: Expr, _)))
   }
 
   /** factor ::= number | "+" factor | "-" factor | "(" expression ")" */

@@ -7,19 +7,21 @@ object CombinatorParser extends JavaTokenParsers {
 
   /** expr ::= term { { "+" | "-" } term }* */
   def expr: Parser[Expr] =
-    term ~! opt(("+" | "-") ~ term) ^^ {
-      case l ~ None          => l
-      case l ~ Some("+" ~ r) => Plus(l, r)
-      case l ~ Some("-" ~ r) => Minus(l, r)
+    term ~! rep(("+" | "-") ~ term) ^^ {
+      case l ~ x => x.foldLeft(l) {
+        case (res, "+" ~ r) => Plus(res, r)
+        case (res, "-" ~ r) => Minus(res, r)
+      }
     }
 
   /** term ::= factor { { "*" | "/" | "%" } factor }* */
   def term: Parser[Expr] =
-    factor ~! opt(("*" | "/" | "%") ~ factor) ^^ {
-      case l ~ None          => l
-      case l ~ Some("*" ~ r) => Times(l, r)
-      case l ~ Some("/" ~ r) => Div(l, r)
-      case l ~ Some("%" ~ r) => Mod(l, r)
+    factor ~! rep(("*" | "/" | "%") ~ factor) ^^ {
+      case l ~ x => x.foldLeft(l) {
+      	case (res, "*" ~ r) => Times(res, r)
+      	case (res, "/" ~ r) => Div(res, r)
+      	case (res, "%" ~ r) => Mod(res, r)
+      }
     }
 
   /** factor ::= wholeNumber | "+" factor | "-" factor | "(" expr ")" */
@@ -27,6 +29,5 @@ object CombinatorParser extends JavaTokenParsers {
     wholeNumber ^^ { case s => Constant(s.toInt) }
     | "+" ~> factor ^^ { case e => e }
     | "-" ~> factor ^^ { case e => UMinus(e) }
-    | "(" ~ expr ~ ")" ^^ { case _ ~ e ~ _ => e }
-  )
+    | "(" ~ expr ~ ")" ^^ { case _ ~ e ~ _ => e })
 }
