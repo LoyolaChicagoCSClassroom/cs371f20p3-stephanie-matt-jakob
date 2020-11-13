@@ -51,13 +51,13 @@ object CombinatorParser extends JavaTokenParsers {
     | "+" ~> factor ^^ { case e => e }
     | "-" ~> factor ^^ { case e => UMinus(e) }
     | "(" ~ expr ~ ")" ^^ { case _ ~ e ~ _ => e }
-    | ident ^^ { case i => Variable(i) } // don't know what's supposed to go here, putting Variable returns an error
-    | ident ^^ { case i if (new Regex("[a-zA-Z] [a-zA-Z0-9]*") findAllIn i.mkString(",").length() > 0) => Variable(i) }) // don't know what's supposed to go here, putting Variable returns an error
+    | ident ^^ { case i => Variable(i) }) // don't know what's supposed to go here, putting Variable returns an error
+    // | ident ^^ { case i if (new Regex("[a-zA-Z] [a-zA-Z0-9]*") findAllIn i.mkString(",").length() > 0) => Variable(i) }) // don't know what's supposed to go here, putting Variable returns an error
 
-  /** statement ::= ident = expr | while (expr) statement | { statement , ... , statement } */
-  def statement: Parser[Expr] = (
-    ident ~ "=" ~ expr ^^ { case s ~ _ ~ r => Assign(Variable(s), r) }
-  // | "while" ~ "(" ~> expr ~ ")" ~ statement ^^ { case g ~ _ ~ b => While(g, b) }
-  // | "{" ~> repsep(statement, ",") <~ "}" ^^ { case ss => Sequence(ss: _*) }
-  )
+  // /** statement ::= ident = expr | while (expr) statement | { statement , ... , statement } */
+  // def statement: Parser[Expr] = (
+  //   ident ~ "=" ~ expr ^^ { case s ~ _ ~ r => Assign(Variable(s), r) }
+  // // | "while" ~ "(" ~> expr ~ ")" ~ statement ^^ { case g ~ _ ~ b => While(g, b) }
+  // // | "{" ~> repsep(statement, ",") <~ "}" ^^ { case ss => Sequence(ss: _*) }
+  // )
 }
