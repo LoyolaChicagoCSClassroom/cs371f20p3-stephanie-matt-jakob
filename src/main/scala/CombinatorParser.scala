@@ -48,7 +48,7 @@ object CombinatorParser extends JavaTokenParsers {
 
   /** statement ::= ident = expr | while (expr) statement | { statement , ... , statement } */
   def statement: Parser[Expr] = (
-    factor ~ "=" ~ expr ~ ";" ^^ { case s ~ _ ~ r => Assign(Variable(s.toString), r) }
+    ident ~ "=" ~ expr ~ ";" ^^ { case s ~ _ ~ r ~ _ => Assign(Variable(s.toString), r) }
   // | "while" ~ "(" ~> expr ~ ")" ~ statement ^^ { case g ~ _ ~ b => While(g, b) }
   // | "{" ~> repsep(statement, ",") <~ "}" ^^ { case ss => Sequence(ss: _*) }
   )
