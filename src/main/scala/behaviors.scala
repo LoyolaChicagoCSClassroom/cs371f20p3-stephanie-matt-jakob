@@ -6,6 +6,7 @@ object behaviors {
 
   def evaluate(e: Expr): Int = e match {
     case Constant(c) => c
+    // case Variable(v) => v //maybe
     case UMinus(r) => -evaluate(r)
     case Plus(l, r) => evaluate(l) + evaluate(r)
     case Minus(l, r) => evaluate(l) - evaluate(r)
@@ -16,6 +17,7 @@ object behaviors {
 
   def size(e: Expr): Int = e match {
     case Constant(c) => 1
+    case Variable(v) => 1 //maybe
     case UMinus(r) => 1 + size(r)
     case Plus(l, r) => 1 + size(l) + size(r)
     case Minus(l, r) => 1 + size(l) + size(r)
@@ -26,6 +28,7 @@ object behaviors {
 
   def height(e: Expr): Int = e match {
     case Constant(c) => 1
+    case Variable(v) => 1 //maybe
     case UMinus(r) => 1 + height(r)
     case Plus(l, r) => 1 + math.max(height(l), height(r))
     case Minus(l, r) => 1 + math.max(height(l), height(r))
@@ -36,6 +39,7 @@ object behaviors {
 
   def toFormattedString(prefix: String)(e: Expr): String = e match {
     case Constant(c) => prefix + c.toString
+    case Variable(v) => prefix + v.toString //maybe
     case UMinus(r) => buildUnaryExprString(prefix, "UMinus", toFormattedString(prefix + INDENT)(r))
     case Plus(l, r) => buildExprString(prefix, "Plus", toFormattedString(prefix + INDENT)(l), toFormattedString(prefix + INDENT)(r))
     case Minus(l, r) => buildExprString(prefix, "Minus", toFormattedString(prefix + INDENT)(l), toFormattedString(prefix + INDENT)(r))
