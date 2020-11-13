@@ -35,6 +35,14 @@ object CombinatorParser extends JavaTokenParsers {
       }
     }
 
+  // assignment  ::= ident "=" expression ";"
+  // def assignment: Parser[Expr] =
+  //   ident ~! rep("=" ~ ";") ^^ {
+  //     case l ~ x => x.foldLeft(l) {
+  //       case (res, "=" ~ r) => Assign(res, r)
+  //     }
+  //   }
+
   /** factor ::= wholeNumber | "+" factor | "-" factor | "(" expr ")" */
   /* need to add factor ::= ident | ... when ident ::= [a-zA-Z] [a-zA-Z0-9]* */
   // ^^ is a top level seperation, whatever is to the left of the character, the right is the semenatic action
