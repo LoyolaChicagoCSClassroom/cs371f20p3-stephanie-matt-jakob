@@ -6,13 +6,14 @@ object behaviors {
 
   def evaluate(e: Expr): Int = e match {
     case Constant(c) => c
-    case Variable(x) => 0 // maybe
+    // case Variable(x) => x // maybe
     case UMinus(r) => -evaluate(r)
     case Plus(l, r) => evaluate(l) + evaluate(r)
     case Minus(l, r) => evaluate(l) - evaluate(r)
     case Times(l, r) => evaluate(l) * evaluate(r)
     case Div(l, r) => evaluate(l) / evaluate(r)
     case Mod(l, r) => evaluate(l) % evaluate(r)
+    // case Assign(l, r) => evaluate(l) = evaluate(r)
   }
 
   def size(e: Expr): Int = e match {
@@ -24,6 +25,7 @@ object behaviors {
     case Times(l, r) => 1 + size(l) + size(r)
     case Div(l, r) => 1 + size(l) + size(r)
     case Mod(l, r) => 1 + size(l) + size(r)
+    case Assign(l, r) => 1 + size(l) + size(r)
   }
 
   def height(e: Expr): Int = e match {
@@ -35,6 +37,7 @@ object behaviors {
     case Times(l, r) => 1 + math.max(height(l), height(r))
     case Div(l, r) => 1 + math.max(height(l), height(r))
     case Mod(l, r) => 1 + math.max(height(l), height(r))
+    case Assign(l, r) => 1 + math.max(height(l), height(r))
   }
 
   def toFormattedString(prefix: String)(e: Expr): String = e match {

@@ -35,14 +35,6 @@ object CombinatorParser extends JavaTokenParsers {
   //     }
   //   }
 
-  // assignment  ::= ident "=" expression ";"
-  // def assignment: Parser[Expr] =
-  //   ident ~! rep("=" ~ ";") ^^ {
-  //     case l ~ x => x.foldLeft(l) {
-  //       case (res, "=" ~ r) => Assign(res, r)
-  //     }
-  //   }
-
   /** factor ::= wholeNumber | "+" factor | "-" factor | "(" expr ")" */
   /* need to add factor ::= ident | ... when ident ::= [a-zA-Z] [a-zA-Z0-9]* */
   // ^^ is a top level seperation, whatever is to the left of the character, the right is the semenatic action
@@ -51,13 +43,14 @@ object CombinatorParser extends JavaTokenParsers {
     | "+" ~> factor ^^ { case e => e }
     | "-" ~> factor ^^ { case e => UMinus(e) }
     | "(" ~ expr ~ ")" ^^ { case _ ~ e ~ _ => e }
-    | ident ^^ { case i => Variable(i) }) // don't know what's supposed to go here, putting Variable returns an error
-  // | ident ^^ { case i if (new Regex("[a-zA-Z] [a-zA-Z0-9]*") findAllIn i.mkString(",").length() > 0) => Variable(i) }) // don't know what's supposed to go here, putting Variable returns an error
+    | ident ^^ { case i => Variable(i) })
+  // | ident ^^ { case i if ((new Regex("[a-zA-Z] [a-zA-Z0-9]*") findAllIn i).filter(_.toString != " ").length > 0) => Variable(i) }) // don't know what's supposed to go here, putting Variable returns an error()
 
-  // /** statement ::= ident = expr | while (expr) statement | { statement , ... , statement } */
-  // def statement: Parser[Expr] = (
-  //   ident ~ "=" ~ expr ^^ { case s ~ _ ~ r => Assign(Variable(s), r) }
-  // // | "while" ~ "(" ~> expr ~ ")" ~ statement ^^ { case g ~ _ ~ b => While(g, b) }
-  // // | "{" ~> repsep(statement, ",") <~ "}" ^^ { case ss => Sequence(ss: _*) }
-  // )
+  /** statement ::= ident = expr | while (expr) statement | { statement , ... , statement } */
+  def statement: Parser[Expr] = (
+    factor ~ "=" ~ expr ~ ";" ^^ { case s ~ _ ~ r => Assign(Variable(s.toString), r) }
+  // | "while" ~ "(" ~> expr ~ ")" ~ statement ^^ { case g ~ _ ~ b => While(g, b) }
+  // | "{" ~> repsep(statement, ",") <~ "}" ^^ { case ss => Sequence(ss: _*) }
+  )
+
 }
