@@ -26,16 +26,14 @@ object CombinatorParser extends JavaTokenParsers {
       }
     }
 
-<<<<<<< HEAD
-=======
-  // assignment  ::= ident "=" expression ";"
-  def assignment: Parser[Expr] =
-    factor ~! rep("=" ~ ";") ^^ {
-      case l ~ x => x.foldLeft(l) {
-        // if ((new Regex("[a-zA-Z] [a-zA-Z0-9]*") findAllIn l).filter(_.toString != " ").length > 0) {
-        case (res, "=" ~ r) => Assign(res, r)
-      }
-    }
+  // // assignment  ::= ident "=" expression ";"
+  // def assignment: Parser[Expr] =
+  //   factor ~! rep("=" ~ ";") ^^ {
+  //     case l ~ x => x.foldLeft(l) {
+  //       // if ((new Regex("[a-zA-Z] [a-zA-Z0-9]*") findAllIn l).filter(_.toString != " ").length > 0) {
+  //       case (res, "=" ~ r) => Assign(res, r)
+  //     }
+  //   }
 
   // assignment  ::= ident "=" expression ";"
   // def assignment: Parser[Expr] =
@@ -45,7 +43,6 @@ object CombinatorParser extends JavaTokenParsers {
   //     }
   //   }
 
->>>>>>> 8550aec2142954501a9d8db933d49831b0f26a1f
   /** factor ::= wholeNumber | "+" factor | "-" factor | "(" expr ")" */
   /* need to add factor ::= ident | ... when ident ::= [a-zA-Z] [a-zA-Z0-9]* */
   // ^^ is a top level seperation, whatever is to the left of the character, the right is the semenatic action
@@ -54,7 +51,6 @@ object CombinatorParser extends JavaTokenParsers {
     | "+" ~> factor ^^ { case e => e }
     | "-" ~> factor ^^ { case e => UMinus(e) }
     | "(" ~ expr ~ ")" ^^ { case _ ~ e ~ _ => e }
-<<<<<<< HEAD
     | ident ^^ { case i => Variable(i) } // don't know what's supposed to go here, putting Variable returns an error
     | ident ^^ { case i if (new Regex("[a-zA-Z] [a-zA-Z0-9]*") findAllIn i.mkString(",").length() > 0) => Variable(i) }) // don't know what's supposed to go here, putting Variable returns an error
 
@@ -64,9 +60,4 @@ object CombinatorParser extends JavaTokenParsers {
   // | "while" ~ "(" ~> expr ~ ")" ~ statement ^^ { case g ~ _ ~ b => While(g, b) }
   // | "{" ~> repsep(statement, ",") <~ "}" ^^ { case ss => Sequence(ss: _*) }
   )
-=======
-    | ident ^^ {
-      case i => Variable(i)
-    })
->>>>>>> 8550aec2142954501a9d8db933d49831b0f26a1f
 }
