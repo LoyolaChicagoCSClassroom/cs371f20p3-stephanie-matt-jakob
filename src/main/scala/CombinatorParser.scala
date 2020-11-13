@@ -52,7 +52,7 @@ object CombinatorParser extends JavaTokenParsers {
     | "-" ~> factor ^^ { case e => UMinus(e) }
     | "(" ~ expr ~ ")" ^^ { case _ ~ e ~ _ => e }
     | ident ^^ { case i => Variable(i) }) // don't know what's supposed to go here, putting Variable returns an error
-    // | ident ^^ { case i if (new Regex("[a-zA-Z] [a-zA-Z0-9]*") findAllIn i.mkString(",").length() > 0) => Variable(i) }) // don't know what's supposed to go here, putting Variable returns an error
+  // | ident ^^ { case i if (new Regex("[a-zA-Z] [a-zA-Z0-9]*") findAllIn i.mkString(",").length() > 0) => Variable(i) }) // don't know what's supposed to go here, putting Variable returns an error
 
   // /** statement ::= ident = expr | while (expr) statement | { statement , ... , statement } */
   // def statement: Parser[Expr] = (
