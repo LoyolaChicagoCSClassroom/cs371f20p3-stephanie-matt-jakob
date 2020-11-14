@@ -6,7 +6,7 @@ object behaviors {
 
   def evaluate(e: Expr): Int = e match {
     case Constant(c) => c
-    case Variable(x) => 0 // maybe
+    case Variable(x) => 0
     case UMinus(r) => -evaluate(r)
     case Plus(l, r) => evaluate(l) + evaluate(r)
     case Minus(l, r) => evaluate(l) - evaluate(r)
@@ -14,11 +14,14 @@ object behaviors {
     case Div(l, r) => evaluate(l) / evaluate(r)
     case Mod(l, r) => evaluate(l) % evaluate(r)
     case Assign(l, r) => 0
+    case Block(ss) => 0
+    case Loop(x, y) => 0
+    case Cond(x, y, z) => 0
   }
 
   def size(e: Expr): Int = e match {
     case Constant(c) => 1
-    case Variable(v) => 1 //maybe
+    case Variable(v) => 1
     case UMinus(r) => 1 + size(r)
     case Plus(l, r) => 1 + size(l) + size(r)
     case Minus(l, r) => 1 + size(l) + size(r)
@@ -26,11 +29,14 @@ object behaviors {
     case Div(l, r) => 1 + size(l) + size(r)
     case Mod(l, r) => 1 + size(l) + size(r)
     case Assign(l, r) => 1 + size(l) + size(r)
+    case Block(ss) => 1 // TODO
+    case Loop(x, y) => 1 // TODO
+    case Cond(x, y, z) => 1 // TODO
   }
 
   def height(e: Expr): Int = e match {
     case Constant(c) => 1
-    case Variable(v) => 1 //maybe
+    case Variable(v) => 1
     case UMinus(r) => 1 + height(r)
     case Plus(l, r) => 1 + math.max(height(l), height(r))
     case Minus(l, r) => 1 + math.max(height(l), height(r))
@@ -38,6 +44,9 @@ object behaviors {
     case Div(l, r) => 1 + math.max(height(l), height(r))
     case Mod(l, r) => 1 + math.max(height(l), height(r))
     case Assign(l, r) => 1 + math.max(height(l), height(r))
+    case Block(ss) => 1 // TODO
+    case Loop(x, y) => 1 // TODO
+    case Cond(x, y, z) => 1 // TODO
   }
 
   def toFormattedString(prefix: String)(e: Expr): String = e match {
@@ -50,6 +59,9 @@ object behaviors {
     case Div(l, r) => buildExprString(prefix, "Div", toFormattedString(prefix + INDENT)(l), toFormattedString(prefix + INDENT)(r))
     case Mod(l, r) => buildExprString(prefix, "Mod", toFormattedString(prefix + INDENT)(l), toFormattedString(prefix + INDENT)(r))
     case Assign(l, r) => buildExprString(prefix, "Assign", toFormattedString(prefix + INDENT)(l), toFormattedString(prefix + INDENT)(r))
+    case Block(s) => buildExprString(prefix, "Block", toFormattedString(prefix + INDENT)(s), "")
+    case Loop(x, y) => buildExprString(prefix, "Loop", toFormattedString(prefix + INDENT)(x), toFormattedString(prefix + INDENT)(y))
+    case Cond(x, y, z) => buildExprString(prefix, "Cond", toFormattedString(prefix + INDENT)(x), toFormattedString(prefix + INDENT)(y)) // TODO figure out how to place a third arguement
   }
 
   def toFormattedString(e: Expr): String = toFormattedString("")(e)

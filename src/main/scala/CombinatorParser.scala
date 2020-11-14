@@ -26,15 +26,6 @@ object CombinatorParser extends JavaTokenParsers {
       }
     }
 
-  // // assignment  ::= ident "=" expression ";"
-  // def assignment: Parser[Expr] =
-  //   factor ~! rep("=" ~ ";") ^^ {
-  //     case l ~ x => x.foldLeft(l) {
-  //       // if ((new Regex("[a-zA-Z] [a-zA-Z0-9]*") findAllIn l).filter(_.toString != " ").length > 0) {
-  //       case (res, "=" ~ r) => Assign(res, r)
-  //     }
-  //   }
-
   /** factor ::= wholeNumber | "+" factor | "-" factor | "(" expr ")" */
   /* need to add factor ::= ident | ... when ident ::= [a-zA-Z] [a-zA-Z0-9]* */
   // ^^ is a top level seperation, whatever is to the left of the character, the right is the semenatic action
@@ -44,13 +35,38 @@ object CombinatorParser extends JavaTokenParsers {
     | "-" ~> factor ^^ { case e => UMinus(e) }
     | "(" ~ expr ~ ")" ^^ { case _ ~ e ~ _ => e }
     | ident ^^ { case i => Variable(i) })
-  // | ident ^^ { case i if ((new Regex("[a-zA-Z] [a-zA-Z0-9]*") findAllIn i).filter(_.toString != " ").length > 0) => Variable(i) }) // don't know what's supposed to go here, putting Variable returns an error()
 
-  /** statement ::= ident = expr | while (expr) statement | { statement , ... , statement } */
+  // assignment: ident "=" expression ";"
+  def assignment: Parser[Expr] = (
+    ident ~ "=" ~ expr ~ ";" ^^ { case s ~ _ ~ r ~ _ => Assign(Variable(s), r) })
+
+  // conditional: "if" "(" expression ")" block [ "else" block ]
+  def conditional: Parser[Expr] = (
+    "if" ~ "(" ~> expr ~ ")" ~ block ~ opt("else" ~ block) ^^ {
+      case g ~ _ ~ t ~ None => Cond(g, t, Block())
+      case g ~ _ ~ t ~ Some(_ ~ e) => Cond(g, t, e)
+    })
+
+  // loop: "while" "(" expression ")" block
+  def loop: Parser[Expr] = (
+    "while" ~ "(" ~> expr ~ ")" ~ statement ^^ { case g ~ _ ~ b => Loop(g, b) })
+
+  // block : "{" statement* "}"
+  def block: Parser[Expr] = (
+    "{" ~> repsep(statement, ",") <~ "}" ^^ { case ss => Block(ss: _*) })
+
+  // statement: expression ";" | assignment | conditional | loop | block
   def statement: Parser[Expr] = (
-    ident ~ "=" ~ expr ~ ";" ^^ { case s ~ _ ~ r ~ _ => Assign(Variable(s.toString), r) }
-  // | "while" ~ "(" ~> expr ~ ")" ~ statement ^^ { case g ~ _ ~ b => While(g, b) }
-  // | "{" ~> repsep(statement, ",") <~ "}" ^^ { case ss => Sequence(ss: _*) }
-  )
+    expr ~ ";" ^^ { case e ~ _ => e }
+    | assignment | conditional | loop | block)
 
 }
+
+// // attempt at more than one colon
+// | ident ~! rep("=" ~ expr <~ ";") ^^ {
+//   case l ~ x => x.foldLeft(l) {
+//     case (res, s ~ r) => Assign(Variable(s), r)
+//   }
+// }
+
+// | ident ^^ { case i if ((new Regex("[a-zA-Z] [a-zA-Z0-9]*") findAllIn i).filter(_.toString != " ").length > 0) => Variable(i) })
