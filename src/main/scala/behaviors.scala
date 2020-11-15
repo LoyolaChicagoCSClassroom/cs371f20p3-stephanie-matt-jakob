@@ -108,6 +108,28 @@ object behaviors {
     result.toString
   }
 
+  def toUnparsed(e: Expr): String = toUnparsed("")(e)
+
+  def toUnparsed(prefix: String)(e: Expr): String = e match {
+    case Constant(c) => buildUnaryExprString(prefix, "Constant", c.toString)
+    case Variable(v) => buildUnaryExprString(prefix, "Variable", v)
+    case UMinus(r) => buildUnaryExprString(prefix, "UMinus", toFormattedString(prefix + INDENT)(r))
+    case Plus(l, r) => buildExprString(prefix, "Plus", toFormattedString(prefix + INDENT)(l), toFormattedString(prefix + INDENT)(r))
+    case Minus(l, r) => buildExprString(prefix, "Minus", toFormattedString(prefix + INDENT)(l), toFormattedString(prefix + INDENT)(r))
+    case Times(l, r) => buildExprString(prefix, "Times", toFormattedString(prefix + INDENT)(l), toFormattedString(prefix + INDENT)(r))
+    case Div(l, r) => buildExprString(prefix, "Div", toFormattedString(prefix + INDENT)(l), toFormattedString(prefix + INDENT)(r))
+    case Mod(l, r) => buildExprString(prefix, "Mod", toFormattedString(prefix + INDENT)(l), toFormattedString(prefix + INDENT)(r))
+    case Assign(l, r) => buildExprString(prefix, "Assign", toFormattedString(prefix + INDENT)(l), toFormattedString(prefix + INDENT)(r))
+    case Block(statements @ _*) => {
+      // Block top level, pass in all formated exprs to build urnary string
+      val block_list = statements.map(s => toFormattedString(prefix + INDENT)(s))
+      buildBlockExprString(prefix, "Block", block_list: _*)
+      // buildExprString(prefix, "Assign", toFormattedString(prefix + INDENT)(l), toFormattedString(prefix + INDENT)(r))
+    }
+    case Loop(x, y) => buildExprString(prefix, "Loop", toFormattedString(prefix + INDENT)(x), toFormattedString(prefix + INDENT)(y))
+    case Cond(x, y, z) => buildExprString(prefix, "Cond", toFormattedString(prefix + INDENT)(x), toFormattedString(prefix + INDENT)(y) + toFormattedString(prefix + INDENT)(z))
+  }
+
   val EOL = scala.util.Properties.lineSeparator
   val INDENT = ".."
 }
