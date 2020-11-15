@@ -76,10 +76,8 @@ object behaviors {
     val result = new StringBuilder(prefix)
     result.append(nodeString)
     result.append("(")
-    result.append(EOL)
     result.append(leftString)
     result.append(", ")
-    result.append(EOL)
     result.append(rightString)
     result.append(")")
     result.toString
@@ -90,7 +88,6 @@ object behaviors {
     result.append(nodeString)
     result.append("(")
     exprStrings.map(s => {
-      result.append(EOL)
       result.append(s)
       result.append(", ")
     })
@@ -102,7 +99,6 @@ object behaviors {
     val result = new StringBuilder(prefix)
     result.append(nodeString)
     result.append("(")
-    result.append(EOL)
     result.append(exprString)
     result.append(")")
     result.toString
