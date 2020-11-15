@@ -12,6 +12,7 @@
 .metals/
 # vscode
 .vscode/
+.bloop/
 
 # generated files
 bin/
@@ -41,3 +42,6 @@ local.sbt
 # SBT configuration files
 # remove if specific version of SBT is required
 project/build.properties 
+project/.bloop/
+project/project/
+project/metals.sbt
