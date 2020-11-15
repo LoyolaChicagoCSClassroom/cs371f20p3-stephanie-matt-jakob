@@ -53,13 +53,13 @@ object behaviors {
   def toFormattedString(prefix: String)(e: Expr): String = e match {
     case Constant(c) => buildUnaryExprString(prefix, "Constant", c.toString)
     case Variable(v) => buildUnaryExprString(prefix, "Variable", v)
-    case UMinus(r) => buildUnaryExprString(prefix, "UMinus", toFormattedString(prefix + INDENT)(r))
-    case Plus(l, r) => buildExprString(prefix, "Plus", toFormattedString(prefix + INDENT)(l), toFormattedString(prefix + INDENT)(r))
-    case Minus(l, r) => buildExprString(prefix, "Minus", toFormattedString(prefix + INDENT)(l), toFormattedString(prefix + INDENT)(r))
-    case Times(l, r) => buildExprString(prefix, "Times", toFormattedString(prefix + INDENT)(l), toFormattedString(prefix + INDENT)(r))
-    case Div(l, r) => buildExprString(prefix, "Div", toFormattedString(prefix + INDENT)(l), toFormattedString(prefix + INDENT)(r))
-    case Mod(l, r) => buildExprString(prefix, "Mod", toFormattedString(prefix + INDENT)(l), toFormattedString(prefix + INDENT)(r))
-    case Assign(l, r) => buildExprString(prefix, "Assign", toFormattedString(prefix + INDENT)(l), toFormattedString(prefix + INDENT)(r))
+    case UMinus(r) => buildUnaryExprString(prefix, "UMinus", toFormattedString(prefix)(r))
+    case Plus(l, r) => buildExprString(prefix, "Plus", toFormattedString(prefix)(l), toFormattedString(prefix)(r))
+    case Minus(l, r) => buildExprString(prefix, "Minus", toFormattedString(prefix)(l), toFormattedString(prefix)(r))
+    case Times(l, r) => buildExprString(prefix, "Times", toFormattedString(prefix)(l), toFormattedString(prefix)(r))
+    case Div(l, r) => buildExprString(prefix, "Div", toFormattedString(prefix)(l), toFormattedString(prefix)(r))
+    case Mod(l, r) => buildExprString(prefix, "Mod", toFormattedString(prefix)(l), toFormattedString(prefix)(r))
+    case Assign(l, r) => buildExprString(prefix, "Assign", toFormattedString(prefix)(l), toFormattedString(prefix)(r))
     case Block(statements @ _*) => {
       // Block top level, pass in all formated exprs to build urnary string
       val block_list = statements.map(s => toFormattedString(prefix + INDENT)(s))
@@ -111,25 +111,60 @@ object behaviors {
   def toUnparsed(e: Expr): String = toUnparsed("")(e)
 
   def toUnparsed(prefix: String)(e: Expr): String = e match {
-    case Constant(c) => buildUnaryExprString(prefix, "Constant", c.toString)
-    case Variable(v) => buildUnaryExprString(prefix, "Variable", v)
-    case UMinus(r) => buildUnaryExprString(prefix, "UMinus", toFormattedString(prefix + INDENT)(r))
-    case Plus(l, r) => buildExprString(prefix, "Plus", toFormattedString(prefix + INDENT)(l), toFormattedString(prefix + INDENT)(r))
-    case Minus(l, r) => buildExprString(prefix, "Minus", toFormattedString(prefix + INDENT)(l), toFormattedString(prefix + INDENT)(r))
-    case Times(l, r) => buildExprString(prefix, "Times", toFormattedString(prefix + INDENT)(l), toFormattedString(prefix + INDENT)(r))
-    case Div(l, r) => buildExprString(prefix, "Div", toFormattedString(prefix + INDENT)(l), toFormattedString(prefix + INDENT)(r))
-    case Mod(l, r) => buildExprString(prefix, "Mod", toFormattedString(prefix + INDENT)(l), toFormattedString(prefix + INDENT)(r))
-    case Assign(l, r) => buildExprString(prefix, "Assign", toFormattedString(prefix + INDENT)(l), toFormattedString(prefix + INDENT)(r))
+    case Constant(c) => buildUnaryExprUnparsed(prefix, "Constant", c.toString)
+    case Variable(v) => buildUnaryExprUnparsed(prefix, "Variable", v)
+    case UMinus(r) => buildUnaryExprUnparsed(prefix, "UMinus", toUnparsed(prefix + INDENT)(r))
+    case Plus(l, r) => buildExprUnparsed(prefix, "Plus", toUnparsed(prefix + INDENT)(l), toUnparsed(prefix + INDENT)(r))
+    case Minus(l, r) => buildExprUnparsed(prefix, "Minus", toUnparsed(prefix + INDENT)(l), toUnparsed(prefix + INDENT)(r))
+    case Times(l, r) => buildExprUnparsed(prefix, "Times", toUnparsed(prefix + INDENT)(l), toUnparsed(prefix + INDENT)(r))
+    case Div(l, r) => buildExprUnparsed(prefix, "Div", toUnparsed(prefix + INDENT)(l), toUnparsed(prefix + INDENT)(r))
+    case Mod(l, r) => buildExprUnparsed(prefix, "Mod", toUnparsed(prefix + INDENT)(l), toUnparsed(prefix + INDENT)(r))
+    case Assign(l, r) => buildExprUnparsed(prefix, "Assign", toUnparsed(prefix + INDENT)(l), toUnparsed(prefix + INDENT)(r))
     case Block(statements @ _*) => {
       // Block top level, pass in all formated exprs to build urnary string
-      val block_list = statements.map(s => toFormattedString(prefix + INDENT)(s))
-      buildBlockExprString(prefix, "Block", block_list: _*)
-      // buildExprString(prefix, "Assign", toFormattedString(prefix + INDENT)(l), toFormattedString(prefix + INDENT)(r))
+      val block_list = statements.map(s => toUnparsed(prefix + INDENT)(s))
+      buildBlockExprUnparsed(prefix, "Block", block_list: _*)
     }
-    case Loop(x, y) => buildExprString(prefix, "Loop", toFormattedString(prefix + INDENT)(x), toFormattedString(prefix + INDENT)(y))
-    case Cond(x, y, z) => buildExprString(prefix, "Cond", toFormattedString(prefix + INDENT)(x), toFormattedString(prefix + INDENT)(y) + toFormattedString(prefix + INDENT)(z))
+    case Loop(x, y) => buildExprUnparsed(prefix, "Loop", toUnparsed(prefix + INDENT)(x), toUnparsed(prefix + INDENT)(y))
+    case Cond(x, y, z) => buildExprUnparsed(prefix, "Cond", toUnparsed(prefix + INDENT)(x), toUnparsed(prefix + INDENT)(y) + toUnparsed(prefix + INDENT)(z))
+  }
+
+  def buildExprUnparsed(prefix: String, nodeString: String, leftString: String, rightString: String) = {
+    val result = new StringBuilder(prefix)
+    result.append(nodeString)
+    result.append("(")
+    result.append(EOL)
+    result.append(leftString)
+    result.append(", ")
+    result.append(EOL)
+    result.append(rightString)
+    result.append(")")
+    result.toString
+  }
+
+  def buildBlockExprUnparsed(prefix: String, nodeString: String, exprStrings: String*) = {
+    val result = new StringBuilder(prefix)
+    result.append(nodeString)
+    result.append("(")
+    exprStrings.map(s => {
+      result.append(EOL)
+      result.append(s)
+      result.append(", ")
+    })
+    result.append(")")
+    result.toString
+  }
+
+  def buildUnaryExprUnparsed(prefix: String, nodeString: String, exprString: String) = {
+    val result = new StringBuilder(prefix)
+    result.append(nodeString)
+    result.append("(")
+    result.append(EOL)
+    result.append(exprString)
+    result.append(")")
+    result.toString
   }
 
   val EOL = scala.util.Properties.lineSeparator
-  val INDENT = ".."
+  val INDENT = "  "
 }
