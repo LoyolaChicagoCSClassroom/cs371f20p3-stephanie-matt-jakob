@@ -7,23 +7,22 @@ object behaviors {
 
   def evaluate(e: Expr): Int = e match {
     case Constant(c) => c
-    case Variable(x) => 0 // maybe
+    case Variable(x) => 0
     case UMinus(r) => -evaluate(r)
     case Plus(l, r) => evaluate(l) + evaluate(r)
     case Minus(l, r) => evaluate(l) - evaluate(r)
     case Times(l, r) => evaluate(l) * evaluate(r)
     case Div(l, r) => evaluate(l) / evaluate(r)
     case Mod(l, r) => evaluate(l) % evaluate(r)
-    case Assign(l, r) => 0
+    case Assign(l, r) => evaluate(r)
     case Block(statements @ _*) => { val evaluate_list = statements.map(x => evaluate(x)); evaluate_list.sum }
-    // case Block(ss @ _*) => ss.foldLeft(0) { (x, y) => evaluate(x) + evaluate(y) }
-    case Loop(x, y) => 0
-    case Cond(x, y, z) => 0
+    case Loop(x, y) => evaluate(y)
+    case Cond(x, y, z) => evaluate(y) + evaluate(z)
   }
 
   def size(e: Expr): Int = e match {
     case Constant(c) => 1
-    case Variable(v) => 1 //maybe
+    case Variable(v) => 1
     case UMinus(r) => 1 + size(r)
     case Plus(l, r) => 1 + size(l) + size(r)
     case Minus(l, r) => 1 + size(l) + size(r)
@@ -31,10 +30,9 @@ object behaviors {
     case Div(l, r) => 1 + size(l) + size(r)
     case Mod(l, r) => 1 + size(l) + size(r)
     case Assign(l, r) => 1 + size(l) + size(r)
-    case Block(_*) => 0
     case Block(statements @ _*) => { val count_list = statements.map(x => size(x)); count_list.sum }
-    case Loop(x, y) => 1 + math.max(height(x), height(y))
-    case Cond(x, y, z) => 1 // TODO
+    case Loop(x, y) => 1 + size(x) + size(y)
+    case Cond(x, y, z) => 1 + size(x) + size(y) + size(z)
   }
 
   def height(e: Expr): Int = e match {
@@ -49,7 +47,7 @@ object behaviors {
     case Assign(l, r) => 1 + math.max(height(l), height(r))
     case Block(statements @ _*) => { 1 + statements.foldLeft(0) { (a, b) => Math.max(a, height(b)) } }
     case Loop(x, y) => 1 + math.max(height(x), height(y))
-    case Cond(x, y, z) => 1 // TODO
+    case Cond(x, y, z) => 1 + math.max(math.max(height(x), height(y)), height(z))
   }
 
   def toFormattedString(prefix: String)(e: Expr): String = e match {
