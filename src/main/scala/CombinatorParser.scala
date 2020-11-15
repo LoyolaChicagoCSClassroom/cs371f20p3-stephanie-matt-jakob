@@ -53,13 +53,12 @@ object CombinatorParser extends JavaTokenParsers {
 
   // block : "{" statement* "}"
   def block: Parser[Expr] = (
-    "{" ~> repsep(statement, ",") <~ "}" ^^ { case ss => Block(ss: _*) })
+    "{" ~> rep(statement) <~ "}" ^^ { case ss => Block(ss: _*) })
 
   // statement: expression ";" | assignment | conditional | loop | block
   def statement: Parser[Expr] = (
     expr ~ ";" ^^ { case e ~ _ => e }
     | assignment | conditional | loop | block)
-
 }
 
 // // attempt at more than one colon
