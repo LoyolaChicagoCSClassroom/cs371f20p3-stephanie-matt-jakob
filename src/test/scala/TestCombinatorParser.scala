@@ -2,6 +2,7 @@ package edu.luc.cs.laufer.cs371.expressions
 
 import org.scalatest.funsuite.AnyFunSuite
 
+import behaviors._
 import TestFixtures._
 
 object MainCombinatorParser extends App {
@@ -13,8 +14,29 @@ object MainCombinatorParser extends App {
 }
 
 class TestCombinatorParser extends AnyFunSuite {
-  val parsedExpr = CombinatorParser.parseAll(CombinatorParser.expr, complex1string)
-  val parsedExpr2 = CombinatorParser.parseAll(CombinatorParser.expr, complex1string2)
-  test("parser works 1") { assert(parsedExpr.get === complex1) }
-  test("parser works 2") { assert(parsedExpr2.get === complex1) }
+  // assignment test
+  val parsedExpr = CombinatorParser.parseAll(CombinatorParser.statement, assignmentString)
+  test("assignment parser test") { assert(parsedExpr.get === assignment) }
+  test("assignment unparser test") { assert(toUnparsed(parsedExpr.get) === assignmentUnpars) }
+
+  // loop test
+  val parsedExpr2 = CombinatorParser.parseAll(CombinatorParser.statement, whileString)
+  test("loop parser test") { assert(parsedExpr2.get === whileAST) }
+  test("loop unparser test") { assert(toUnparsed(parsedExpr2.get) === whileUnpars) }
+
+  // condition test
+  val parsedExpr3 = CombinatorParser.parseAll(CombinatorParser.statement, conditionString)
+  test("condition parser test") { assert(parsedExpr3.get === conditionAST) }
+  test("condition unparser test") { assert(toUnparsed(parsedExpr3.get) === conditionUnpars) }
+
+  // block test
+  val parsedExpr4 = CombinatorParser.parseAll(CombinatorParser.statement, blockString)
+  test("block parser test") { assert(parsedExpr4.get === blockAST) }
+  test("block unparser test") { assert(toUnparsed(parsedExpr4.get) === blockUnpars) }
+
+  // complex test
+  val parsedExpr5 = CombinatorParser.parseAll(CombinatorParser.expr, complex1string)
+  val parsedExpr6 = CombinatorParser.parseAll(CombinatorParser.statement, complex1string2)
+  test("complex 1 parser test") { assert(parsedExpr5.get === complex1) }
+  test("complex 2 parser test") { assert(parsedExpr6.get === complex2) }
 }

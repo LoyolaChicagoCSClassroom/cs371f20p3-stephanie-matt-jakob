@@ -110,19 +110,19 @@ object behaviors {
     case Constant(c) => buildUnaryExprUnparsed(prefix, c.toString)
     case Variable(v) => buildUnaryExprUnparsed(prefix, v)
     case UMinus(r) => buildUnaryExprUnparsed(prefix, toUnparsed(prefix)(r))
-    case Plus(l, r) => buildExprUnparsed(prefix, "+", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
-    case Minus(l, r) => buildExprUnparsed(prefix, "-", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
-    case Times(l, r) => buildExprUnparsed(prefix, "*", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
-    case Div(l, r) => buildExprUnparsed(prefix, "/", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
-    case Mod(l, r) => buildExprUnparsed(prefix, "%", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
-    case Assign(l, r) => buildAssignExprUnparsed(prefix, "=", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
+    case Plus(l, r) => buildExprUnparsed(prefix, " + ", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
+    case Minus(l, r) => buildExprUnparsed(prefix, " - ", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
+    case Times(l, r) => buildExprUnparsed(prefix, " * ", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
+    case Div(l, r) => buildExprUnparsed(prefix, " / ", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
+    case Mod(l, r) => buildExprUnparsed(prefix, " % ", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
+    case Assign(l, r) => buildAssignExprUnparsed(prefix, " = ", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
     case Block(statements @ _*) => {
       // Block top level, pass in all formated exprs to build urnary string
-      val block_list = statements.map(s => toUnparsed(INDENT + prefix)(s))
+      val block_list = statements.map(s => toUnparsed(prefix)(s))
       buildBlockExprUnparsed(prefix, block_list: _*)
     }
-    case Loop(x, y) => buildLoopExprUnparsed(prefix, "while(", toUnparsed(prefix)(x), toUnparsed(prefix)(y))
-    case Cond(x, y, z) => buildCondExprUnparsed(prefix, "if(", toUnparsed(prefix)(x), toUnparsed(prefix)(y) + "else" + toUnparsed(prefix)(z))
+    case Loop(x, y) => buildLoopExprUnparsed(prefix, "while (", toUnparsed(prefix)(x), toUnparsed(prefix)(y))
+    case Cond(x, y, z) => buildCondExprUnparsed(prefix, "if (", toUnparsed(prefix)(x), toUnparsed(prefix)(y) + " else" + toUnparsed(prefix)(z))
   }
 
   def buildCondExprUnparsed(prefix: String, nodeString: String, leftString: String, rightString: String) = {
@@ -148,6 +148,7 @@ object behaviors {
     result.append(leftString)
     result.append(nodeString)
     result.append(rightString)
+    result.append(";")
     result.toString
   }
 
@@ -164,9 +165,9 @@ object behaviors {
   def buildBlockExprUnparsed(prefix: String, exprStrings: String*) = {
     val result = new StringBuilder(prefix)
     result.append("{")
-    result.append(EOL)
+    // result.append(EOL)
     exprStrings.map(s => {
-      result.append(EOL)
+      result.append(EOL + INDENT)
       result.append(s)
     })
     result.append(EOL)
