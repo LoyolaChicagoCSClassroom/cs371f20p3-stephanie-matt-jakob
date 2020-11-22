@@ -1,4 +1,5 @@
 package edu.luc.cs.laufer.cs371.expressions
+import scala.collection.mutable.{ Map => MMap }
 
 object CombinatorCalculator extends App {
 
@@ -10,6 +11,8 @@ object CombinatorCalculator extends App {
     } else {
       import behaviors._
       val expr = result.get
+      println("Original expr:")
+      println(expr)
       println("The parsed expression is: ")
       println(toFormattedString(expr))
       println("It has size " + size(expr) + " and height " + height(expr))
@@ -17,10 +20,10 @@ object CombinatorCalculator extends App {
       println("The unparsed expression is: ")
       println(toUnparsed(expr))
 
-
       // Doing the execute stuff
       import Execute._
-      
+      println("Executing the infix expression...")
+      println(apply(MMap[String, Int]())(expr))
     }
   }
 
