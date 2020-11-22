@@ -118,7 +118,7 @@ object behaviors {
     case Assign(l, r) => buildAssignExprUnparsed(prefix, " = ", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
     case Block(statements @ _*) => {
       // Block top level, pass in all formated exprs to build urnary string
-      val block_list = statements.map(s => toUnparsed(prefix)(s))
+      val block_list = statements.map(s => toUnparsed(prefix + INDENT)(s)) //add indent after prefix
       buildBlockExprUnparsed(prefix, block_list: _*)
     }
     case Loop(x, y) => buildLoopExprUnparsed(prefix, "while (", toUnparsed(prefix)(x), toUnparsed(prefix)(y))
@@ -153,7 +153,7 @@ object behaviors {
   }
 
   def buildExprUnparsed(prefix: String, nodeString: String, leftString: String, rightString: String) = {
-    val result = new StringBuilder(prefix)
+    val result = new StringBuilder()
     result.append("(")
     result.append(leftString)
     result.append(nodeString)
@@ -167,16 +167,18 @@ object behaviors {
     result.append("{")
     // result.append(EOL)
     exprStrings.map(s => {
-      result.append(EOL + INDENT)
+      result.append(EOL)
+      result.append(prefix + INDENT)
       result.append(s)
     })
     result.append(EOL)
+    result.append(prefix)
     result.append("}")
     result.toString
   }
 
   def buildUnaryExprUnparsed(prefix: String, exprString: String) = {
-    val result = new StringBuilder(prefix)
+    val result = new StringBuilder()
     result.append(exprString)
     result.toString
   }

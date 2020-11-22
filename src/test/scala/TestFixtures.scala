@@ -19,10 +19,12 @@ object TestFixtures {
   val whileAST = 
     Loop(
       Constant(0),
-      Assign(
+      Block(
+        Assign(
         Variable("y"),
         Constant(3)
-      ),
+        ),
+      )
     )
 
   val whileString = "while (0) { y = 3; }"
