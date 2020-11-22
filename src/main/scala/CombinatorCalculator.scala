@@ -16,6 +16,11 @@ object CombinatorCalculator extends App {
       println("It evaluates to " + evaluate(expr))
       println("The unparsed expression is: ")
       println(toUnparsed(expr))
+
+
+      // Doing the execute stuff
+      import Execute._
+      
     }
   }
 
