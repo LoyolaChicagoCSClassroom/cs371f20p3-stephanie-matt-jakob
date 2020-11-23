@@ -39,8 +39,9 @@ object Execute {
       }
       0
     }
-    case Block(ss @ _*) =>
-      ss.foldLeft(0)((c, s) => apply(store)(s))
+    //case conditional() =>
+
+    case Block(ss @ _*) => ss.foldLeft(0)((c, s) => apply(store)(s))
     case Loop(guard, body) => {
       var gvalue = apply(store)(guard)
       while (gvalue != 0) {
