@@ -14,23 +14,23 @@ object Execute {
     case Minus(left, right) => apply(store)(left) - apply(store)(right)
     case Times(left, right) => apply(store)(left) * apply(store)(right)
     case Div(left, right) => apply(store)(left) / apply(store)(right)
-    case Variable(name) => store(name)
+    case Variable(name) => { store.put(name.toString(), 0); 0 }
     case Assign(left, right) => {
       val lvalue = apply(store)(left)
       val rvalue = apply(store)(right)
       store.put(lvalue.toString(), rvalue)
-      0
+      rvalue
     }
     case Block(statements @ _*) =>
       statements.foldLeft(0)((c, s) => apply(store)(s))
-    case Loop(guard, body) => {
-      var gvalue = apply(store)(guard)
-      while (gvalue != 0) {
-        apply(store)(body)
-        gvalue = apply(store)(guard)
-      }
-      0
-    }
+    // case Loop(guard, body) => {
+    //   var gvalue = apply(store)(guard)
+    //   while (gvalue != 0) {
+    //     apply(store)(body)
+    //     gvalue = apply(store)(guard)
+    //   }
+    //   0
+    // }
   }
 
 }
