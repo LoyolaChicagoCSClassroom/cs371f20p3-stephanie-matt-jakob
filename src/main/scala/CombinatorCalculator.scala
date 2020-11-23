@@ -1,6 +1,6 @@
 package edu.luc.cs.laufer.cs371.expressions
 import scala.collection.mutable.{ Map => MMap }
-import Execute._
+import behaviors._
 
 object CombinatorCalculator extends App {
 
@@ -10,21 +10,21 @@ object CombinatorCalculator extends App {
     if (result.isEmpty) {
       println("This expression could not be parsed")
     } else {
-      import behaviors._
       val expr = result.get
       println("Original expr:")
       println(expr)
       println("The parsed expression is: ")
       println(toFormattedString(expr))
-      println("It has size " + size(expr) + " and height " + height(expr))
-      println("It evaluates to " + evaluate(expr))
       println("The unparsed expression is: ")
       println(toUnparsed(expr))
+      println("It has size " + size(expr) + " and height " + height(expr))
+      println("It evaluates to " + evaluate(expr))
 
       // Doing the execute stuff
+      import Execute._
       println("Executing the infix expression...")
       println(apply(store)(expr))
-      println("Memory: " + store.toString())
+      println("Memory: " + store.toString() + "\n")
     }
   }
 
@@ -34,6 +34,7 @@ object CombinatorCalculator extends App {
   if (args.length > 0) {
     processExpr(args mkString " ", MMap[String, Int]())
   } else {
+    println("Memory: " + store.toString())
     print("Enter infix expression: ")
     scala.io.Source.stdin.getLines() foreach { line =>
       processExpr(line, store)

@@ -1,39 +1,123 @@
 [0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:3:19: object parsing is not a member of package util[0m[0J
 [0m[[0m[31merror[0m] [0m[0mimport scala.util.parsing.combinator.JavaTokenParsers[0m[0J
 [0m[[0m[31merror[0m] [0m[0m                  ^[0m[0J
-[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:6:33: not found: type JavaTokenParsers[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:7:33: not found: type JavaTokenParsers[0m[0J
 [0m[[0m[31merror[0m] [0m[0mobject CombinatorParser extends JavaTokenParsers {[0m[0J
 [0m[[0m[31merror[0m] [0m[0m                                ^[0m[0J
-[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorCalculator.scala:7:35: value parseAll is not a member of object edu.luc.cs.laufer.cs371.expressions.CombinatorParser[0m[0J
-[0m[[0m[31merror[0m] [0m[0m    val result = CombinatorParser.parseAll(CombinatorParser.expr, input)[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorCalculator.scala:9:35: value parseAll is not a member of object edu.luc.cs.laufer.cs371.expressions.CombinatorParser[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    val result = CombinatorParser.parseAll(CombinatorParser.top_level, input)[0m[0J
 [0m[[0m[31merror[0m] [0m[0m                                  ^[0m[0J
-[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:9:13: not found: type Parser[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:60:18: not found: type Parser[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def top_level: Parser[Expr] = ([0m[0J
+[0m[[0m[31merror[0m] [0m[0m                 ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorCalculator_2.scala:9:35: value parseAll is not a member of object edu.luc.cs.laufer.cs371.expressions.CombinatorParser[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    val result = CombinatorParser.parseAll(CombinatorParser.top_level, input)[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                                  ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:11:13: not found: type Parser[0m[0J
 [0m[[0m[31merror[0m] [0m[0m  def expr: Parser[Expr] =[0m[0J
 [0m[[0m[31merror[0m] [0m[0m            ^[0m[0J
-[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:18:13: not found: type Parser[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:20:13: not found: type Parser[0m[0J
 [0m[[0m[31merror[0m] [0m[0m  def term: Parser[Expr] =[0m[0J
 [0m[[0m[31merror[0m] [0m[0m            ^[0m[0J
-[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:28:15: not found: type Parser[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:32:15: not found: type Parser[0m[0J
 [0m[[0m[31merror[0m] [0m[0m  def factor: Parser[Expr] = ([0m[0J
 [0m[[0m[31merror[0m] [0m[0m              ^[0m[0J
-[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:29:5: not found: value wholeNumber[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:33:5: not found: value wholeNumber[0m[0J
 [0m[[0m[31merror[0m] [0m[0m    wholeNumber ^^ { case s => Constant(s.toInt) }[0m[0J
 [0m[[0m[31merror[0m] [0m[0m    ^[0m[0J
-[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:30:11: value ~> is not a member of String[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:34:11: value ~> is not a member of String[0m[0J
 [0m[[0m[31merror[0m] [0m[0m    | "+" ~> factor ^^ { case e => e }[0m[0J
 [0m[[0m[31merror[0m] [0m[0m          ^[0m[0J
-[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:31:11: value ~> is not a member of String[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:35:11: value ~> is not a member of String[0m[0J
 [0m[[0m[31merror[0m] [0m[0m    | "-" ~> factor ^^ { case e => UMinus(e) }[0m[0J
 [0m[[0m[31merror[0m] [0m[0m          ^[0m[0J
-[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:32:11: value ~ is not a member of String[0m[0J
-[0m[[0m[31merror[0m] [0m[0m    | "(" ~ expr ~ ")" ^^ { case _ ~ e ~ _ => e })[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:36:11: value ~ is not a member of String[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    | "(" ~ expr ~ ")" ^^ { case _ ~ e ~ _ => e }[0m[0J
 [0m[[0m[31merror[0m] [0m[0m          ^[0m[0J
-[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:32:40: not found: value ~[0m[0J
-[0m[[0m[31merror[0m] [0m[0m    | "(" ~ expr ~ ")" ^^ { case _ ~ e ~ _ => e })[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:36:40: not found: value ~[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    | "(" ~ expr ~ ")" ^^ { case _ ~ e ~ _ => e }[0m[0J
 [0m[[0m[31merror[0m] [0m[0m                                       ^[0m[0J
-[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:32:36: not found: value ~[0m[0J
-[0m[[0m[31merror[0m] [0m[0m    | "(" ~ expr ~ ")" ^^ { case _ ~ e ~ _ => e })[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:36:36: not found: value ~[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    | "(" ~ expr ~ ")" ^^ { case _ ~ e ~ _ => e }[0m[0J
 [0m[[0m[31merror[0m] [0m[0m                                   ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:37:7: not found: value ident[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    | ident ^^ { case i => Variable(i) })[0m[0J
+[0m[[0m[31merror[0m] [0m[0m      ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:40:19: not found: type Parser[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def assignment: Parser[Expr] = ([0m[0J
+[0m[[0m[31merror[0m] [0m[0m                  ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:41:5: not found: value ident[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    ident ~ "=" ~ expr ~ ";" ^^ { case s ~ _ ~ r ~ _ => Assign(Variable(s), r) })[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:41:50: not found: value ~[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    ident ~ "=" ~ expr ~ ";" ^^ { case s ~ _ ~ r ~ _ => Assign(Variable(s), r) })[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                                                 ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:41:46: not found: value ~[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    ident ~ "=" ~ expr ~ ";" ^^ { case s ~ _ ~ r ~ _ => Assign(Variable(s), r) })[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                                             ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:41:42: not found: value ~[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    ident ~ "=" ~ expr ~ ";" ^^ { case s ~ _ ~ r ~ _ => Assign(Variable(s), r) })[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                                         ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:44:20: not found: type Parser[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def conditional: Parser[Expr] = ([0m[0J
+[0m[[0m[31merror[0m] [0m[0m                   ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:55:14: not found: type Parser[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def block: Parser[Expr] = ([0m[0J
+[0m[[0m[31merror[0m] [0m[0m             ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:45:10: value ~ is not a member of String[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    "if" ~ "(" ~> expr ~ ")" ~ block ~ opt("else" ~ block) ^^ {[0m[0J
+[0m[[0m[31merror[0m] [0m[0m         ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:45:40: not found: value opt[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    "if" ~ "(" ~> expr ~ ")" ~ block ~ opt("else" ~ block) ^^ {[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                                       ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:45:51: value ~ is not a member of String[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    "if" ~ "(" ~> expr ~ ")" ~ block ~ opt("else" ~ block) ^^ {[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                                                  ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:46:22: not found: value ~[0m[0J
+[0m[[0m[31merror[0m] [0m[0m      case g ~ _ ~ t ~ None => Cond(g, t, Block())[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                     ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:46:18: not found: value ~[0m[0J
+[0m[[0m[31merror[0m] [0m[0m      case g ~ _ ~ t ~ None => Cond(g, t, Block())[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                 ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:46:14: not found: value ~[0m[0J
+[0m[[0m[31merror[0m] [0m[0m      case g ~ _ ~ t ~ None => Cond(g, t, Block())[0m[0J
+[0m[[0m[31merror[0m] [0m[0m             ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:47:22: not found: value ~[0m[0J
+[0m[[0m[31merror[0m] [0m[0m      case g ~ _ ~ t ~ Some(_ ~ e) => Cond(g, t, e)[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                     ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:47:18: not found: value ~[0m[0J
+[0m[[0m[31merror[0m] [0m[0m      case g ~ _ ~ t ~ Some(_ ~ e) => Cond(g, t, e)[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                 ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:47:14: not found: value ~[0m[0J
+[0m[[0m[31merror[0m] [0m[0m      case g ~ _ ~ t ~ Some(_ ~ e) => Cond(g, t, e)[0m[0J
+[0m[[0m[31merror[0m] [0m[0m             ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:47:31: not found: value ~[0m[0J
+[0m[[0m[31merror[0m] [0m[0m      case g ~ _ ~ t ~ Some(_ ~ e) => Cond(g, t, e)[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                              ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:51:13: not found: type Parser[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def loop: Parser[Expr] = ([0m[0J
+[0m[[0m[31merror[0m] [0m[0m            ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:52:13: value ~ is not a member of String[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    "while" ~ "(" ~> expr ~ ")" ~ block ^^ { case g ~ _ ~ b => Loop(g, b) })[0m[0J
+[0m[[0m[31merror[0m] [0m[0m            ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:52:57: not found: value ~[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    "while" ~ "(" ~> expr ~ ")" ~ block ^^ { case g ~ _ ~ b => Loop(g, b) })[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                                                        ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:52:53: not found: value ~[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    "while" ~ "(" ~> expr ~ ")" ~ block ^^ { case g ~ _ ~ b => Loop(g, b) })[0m[0J
+[0m[[0m[31merror[0m] [0m[0m                                                    ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:64:18: not found: type Parser[0m[0J
+[0m[[0m[31merror[0m] [0m[0m  def statement: Parser[Expr] = ([0m[0J
+[0m[[0m[31merror[0m] [0m[0m                 ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:56:9: value ~> is not a member of String[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    "{" ~> rep(statement) <~ "}" ^^ { case ss => Block(ss: _*) }[0m[0J
+[0m[[0m[31merror[0m] [0m[0m        ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:56:12: not found: value rep[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    "{" ~> rep(statement) <~ "}" ^^ { case ss => Block(ss: _*) }[0m[0J
+[0m[[0m[31merror[0m] [0m[0m           ^[0m[0J
+[0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/CombinatorParser.scala:61:5: not found: value rep[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    rep(statement) ^^ { case ss => Block(ss: _*) })[0m[0J
+[0m[[0m[31merror[0m] [0m[0m    ^[0m[0J
 [0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegCalculator.scala:3:12: object parboiled2 is not a member of package org[0m[0J
 [0m[[0m[31merror[0m] [0m[0mimport org.parboiled2.ParseError[0m[0J
 [0m[[0m[31merror[0m] [0m[0m           ^[0m[0J
@@ -127,4 +211,4 @@
 [0m[[0m[31merror[0m] [0m[0m/Users/jakobveselsky/Desktop/p3/cs371f20p3-stephanie-matt-jakob/src/main/scala/PegParser.scala:35:16: not found: value rule[0m[0J
 [0m[[0m[31merror[0m] [0m[0m  def Parens = rule { ws('(') ~ Expression ~ ws(')') }[0m[0J
 [0m[[0m[31merror[0m] [0m[0m               ^[0m[0J
-[0m[[0m[31merror[0m] [0m[0m40 errors found[0m[0J
+[0m[[0m[31merror[0m] [0m[0m68 errors found[0m[0J
