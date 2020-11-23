@@ -12,7 +12,7 @@ object Execute_num {
 
   // adding the two main types
   type Store = MMap[String, Num]
-  type Result = Try[Value]
+  type Result = Try[Num]
 
   /** functions with working with store and Variable. */
   // checks to see if the name is in the memory hash map aka store
@@ -24,8 +24,8 @@ object Execute_num {
 
   // puts a variable into the hashmap has a type Num
   // the function has a dummy return variable of Num, the important part is that it is now in the store
-  def putVariableinStore(store: Store)(s: Expr)(num: Num): Num = s match {
-    case Variable(name) => { store.put(name.toString(), num); num }
+  def putVariableinStore(store: Store)(s: Expr)(num: Result): Num = s match {
+    case Variable(name) => { store.put(name.toString(), getNumfromResult(num)); getNumfromResult(num) }
   }
 
   // gets the name of the item inside the Variable wrapper
@@ -38,14 +38,32 @@ object Execute_num {
     case Num(x) => x
   }
 
+  def getNumfromResult(num: Result): Num = num match {
+    case Success(Num(x)) => Num(x)
+  }
+
+  /** Looks up a variable in memory. */
+  def lookup(store: Store)(name: String): Result =
+    store.get(name).fold {
+      Failure(new NoSuchFieldException(name)): Result
+    } {
+      Success(_)
+    }
+
+  def binOp(store: Store, left: Expr, right: Expr, op: (Int, Int) => Int): Result =
+    for {
+      Num(l) <- apply(store)(left);
+      Num(r) <- apply(store)(right)
+    } yield Num(op(l, r))
+
   // apply method to retrieve an int from ast
-  def apply(store: Store)(s: Expr): Num = s match {
-    case Constant(value) => Num(value)
-    case Plus(left, right) => Num(getIntfromNum(apply(store)(left)) + getIntfromNum(apply(store)(right)))
-    case Minus(left, right) => Num(getIntfromNum(apply(store)(left)) - getIntfromNum(apply(store)(right)))
-    case Times(left, right) => Num(getIntfromNum(apply(store)(left)) * getIntfromNum(apply(store)(right)))
-    case Div(left, right) => Num(getIntfromNum(apply(store)(left)) / getIntfromNum(apply(store)(right)))
-    case Variable(name) => store(name)
+  def apply(store: Store)(s: Expr): Result = s match {
+    case Constant(value) => Success(Num(value))
+    case Plus(left, right) => binOp(store, left, right, _ + _)
+    case Minus(left, right) => binOp(store, left, right, _ - _)
+    case Times(left, right) => binOp(store, left, right, _ * _)
+    case Div(left, right) => binOp(store, left, right, _ / _)
+    case Variable(name) => lookup(store)(name)
     case Assign(left, right) => {
       if (!storeHasVariable(store)(left)) {
         val rvalue_1 = apply(store)(right)
@@ -53,20 +71,28 @@ object Execute_num {
       } else {
         val rvalue = apply(store)(right)
         val lvalue = getVariablefromStore(store)(left)
-        store.put(lvalue, rvalue)
+        store.put(lvalue, getNumfromResult(rvalue))
       }
-      Num(0)
+      Success(Num(0))
     }
     case Block(ss @ _*) => {
-      ss.foldLeft(Num(0))((c, s) => apply(store)(s))
+      val i = ss.iterator
+      var result: Num = Num(0)
+      while (i.hasNext) {
+        apply(store)(i.next()) match {
+          case Success(r) => result = r
+          case f @ Failure(_) => return f
+        }
+      }
+      Success(result)
     }
     case Loop(guard, body) => {
       var gvalue = apply(store)(guard)
-      while (gvalue != Num(0)) {
+      while (gvalue != Success(Num(0))) {
         apply(store)(body)
         gvalue = apply(store)(guard)
       }
-      Num(0)
+      Success(Num(0))
     }
   }
 
