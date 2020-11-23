@@ -3,7 +3,7 @@ import scala.collection.mutable.{ Map => MMap }
 
 object CombinatorCalculator extends App {
 
-  def processExpr(input: String): Unit = {
+  def processExpr(input: String, store: MMap[String, Int]): Unit = {
     println("You entered: " + input)
     val result = CombinatorParser.parseAll(CombinatorParser.top_level, input)
     if (result.isEmpty) {
@@ -23,16 +23,20 @@ object CombinatorCalculator extends App {
       // Doing the execute stuff
       import Execute._
       println("Executing the infix expression...")
-      println(apply(MMap[String, Int]())(expr))
+      println(apply(store)(expr))
+      println("Memory: " + store.toString())
     }
   }
 
+  // Prepating an empty map for the store function
+  var store = MMap[String, Int]()
+
   if (args.length > 0) {
-    processExpr(args mkString " ")
+    processExpr(args mkString " ", MMap[String, Int]())
   } else {
     print("Enter infix expression: ")
     scala.io.Source.stdin.getLines() foreach { line =>
-      processExpr(line)
+      processExpr(line, store)
       print("Enter infix expression: ")
     }
   }
