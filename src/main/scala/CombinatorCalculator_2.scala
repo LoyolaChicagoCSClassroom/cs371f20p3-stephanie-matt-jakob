@@ -1,10 +1,10 @@
 package edu.luc.cs.laufer.cs371.expressions
 import scala.collection.mutable.{ Map => MMap }
-import Execute._
+import Execute_num._
 
-object CombinatorCalculator extends App {
+object CombinatorCalculator_2 extends App {
 
-  def processExpr(input: String, store: MMap[String, Int]): Unit = {
+  def processExpr(input: String, store: MMap[String, Num]): Unit = {
     println("You entered: " + input)
     val result = CombinatorParser.parseAll(CombinatorParser.top_level, input)
     if (result.isEmpty) {
@@ -29,10 +29,10 @@ object CombinatorCalculator extends App {
   }
 
   // Prepating an empty map for the store function
-  var store = MMap[String, Int]()
+  var store = MMap[String, Num]()
 
   if (args.length > 0) {
-    processExpr(args mkString " ", MMap[String, Int]())
+    processExpr(args mkString " ", MMap[String, Num]())
   } else {
     print("Enter infix expression: ")
     scala.io.Source.stdin.getLines() foreach { line =>
