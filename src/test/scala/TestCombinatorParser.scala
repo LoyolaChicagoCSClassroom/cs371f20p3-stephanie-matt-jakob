@@ -17,13 +17,14 @@ object MainCombinatorParser extends App {
 }
 
 class TestCombinatorParser extends AnyFunSuite {
-  // Prepating an empty map for the store function
-  var store = MMap[String, Num]()
-
   // assignment test
+  var storeAssign = MMap[String, Num]()
   val parsedExpr = CombinatorParser.parseAll(CombinatorParser.statement, assignmentString)
   test("assignment parser test") { assert(parsedExpr.get === assignment) }
   test("assignment unparser test") { assert(toUnparsed(parsedExpr.get) === assignmentUnpars) }
+  val parsedExprMap = CombinatorParser.parseAll(CombinatorParser.top_level, assignmentMapString)
+  apply(storeAssign)(parsedExprMap.get)
+  test("assignment map test"){ assert(storeAssign.toString === assignmentMap)}
 
   // loop test
   var storeLoop = MMap[String, Num]()
@@ -44,9 +45,13 @@ class TestCombinatorParser extends AnyFunSuite {
   test("condition map test") { assert(storeCond.toString() === condMap )}
 
   // block test
+  var storeBlock = MMap[String, Num]()
   val parsedExpr4 = CombinatorParser.parseAll(CombinatorParser.statement, blockString)
   test("block parser test") { assert(parsedExpr4.get === blockAST) }
   test("block unparser test") { assert(toUnparsed(parsedExpr4.get) === blockUnpars) }
+  val parsedExpr4Map = CombinatorParser.parseAll(CombinatorParser.top_level, blockMapString)
+  apply(storeBlock)(parsedExpr4Map.get)
+  test("block map test"){ assert(storeBlock.toString === blockMap)}
 
   // complex test
   val parsedExpr5 = CombinatorParser.parseAll(CombinatorParser.expr, complex1string)
@@ -54,14 +59,8 @@ class TestCombinatorParser extends AnyFunSuite {
   test("complex 1 parser test") { assert(parsedExpr5.get === complex1) }
   test("complex 2 parser test") { assert(parsedExpr6.get === complex2) }
 
-  //assignment map test
-  val parsedExpr7 = CombinatorParser.parseAll(CombinatorParser.statement, assignmentMapString)
-  apply(store)(parsedExpr7.get)
-  test("assignment map test"){ assert(store.toString === assignmentMap)}
-
-  //block map test
-  val parsedExpr8 = CombinatorParser.parseAll(CombinatorParser.statement, blockMapString)
-  apply(store)(parsedExpr8.get)
-  test("block map test"){ assert(store.toString === blockMap)}
-
+  // Error on unassigned var test
+  var storeError = MMap[String, Num]()
+  val parsedExpr7 = CombinatorParser.parseAll(CombinatorParser.top_level, throwErrorString).get
+  test("error on unassigned var test"){ assert(apply(storeError)(parsedExpr7).toString === throwErrorOutput)}
 }

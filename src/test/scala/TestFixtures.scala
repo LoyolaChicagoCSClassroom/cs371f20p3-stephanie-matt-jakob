@@ -144,4 +144,9 @@ object TestFixtures {
   val blockMapString =  "{x = 0; y = 1;}"
 
   val blockMap = "HashMap(x -> Num(0), y -> Num(1))"
+
+  // Test fixture for if variable hasn't been assigned
+  val throwErrorString = "z;"
+
+  val throwErrorOutput = "Failure(java.lang.NoSuchFieldException: z)"
 }
