@@ -21,10 +21,10 @@ object CombinatorCalculator extends App {
       println("It evaluates to " + evaluate(expr))
 
       // Doing the execute stuff
-      import Execute._
-      println("Executing the infix expression...")
-      println(apply(store)(expr))
-      println("Memory: " + store.toString() + "\n")
+      // import Execute._
+      // println("Executing the infix expression...")
+      // println(apply(store)(expr))
+      // println("Memory: " + store.toString() + "\n")
     }
   }
 
