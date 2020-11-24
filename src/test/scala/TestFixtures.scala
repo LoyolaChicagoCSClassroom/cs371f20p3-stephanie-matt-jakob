@@ -31,6 +31,10 @@ object TestFixtures {
 
   val whileUnpars = "while (0){" + EOL + "  y = 3;" + EOL + "}"
 
+  val whileMapString = "x = 2; y = 3; r = 0; while (y) { r = r + x ; y = y - 1; }"
+
+  val whileMap = "HashMap(r -> Num(6), x -> Num(2), y -> Num(0))"
+
   val conditionAST = 
     Cond(
       Constant(1),
@@ -51,6 +55,10 @@ object TestFixtures {
   val conditionString = "if (1) { x = 2; } else { x = 3; }"
 
   val conditionUnpars = "if (1){" + EOL + "  x = 2;" + EOL + "} else{" + EOL + "  x = 3;" + EOL + "}"
+
+  val condMapString = "x = 2; y = 3; r = 0; if (y) { r = r + x ; y = y + 3; }"
+
+  val condMap = "HashMap(r -> Num(2), x -> Num(2), y -> Num(6))"
 
   val blockAST = 
     Block(

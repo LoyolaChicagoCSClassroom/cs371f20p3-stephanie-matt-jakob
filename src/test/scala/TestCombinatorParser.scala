@@ -4,6 +4,8 @@ import org.scalatest.funsuite.AnyFunSuite
 
 import behaviors._
 import TestFixtures._
+import scala.collection.mutable.{ Map => MMap }
+import Execute_num._
 
 object MainCombinatorParser extends App {
   val parsedExpr = CombinatorParser.parseAll(CombinatorParser.expr, complex1string)
@@ -20,14 +22,22 @@ class TestCombinatorParser extends AnyFunSuite {
   test("assignment unparser test") { assert(toUnparsed(parsedExpr.get) === assignmentUnpars) }
 
   // loop test
+  var storeLoop = MMap[String, Num]()
   val parsedExpr2 = CombinatorParser.parseAll(CombinatorParser.statement, whileString)
   test("loop parser test") { assert(parsedExpr2.get === whileAST) }
   test("loop unparser test") { assert(toUnparsed(parsedExpr2.get) === whileUnpars) }
+  val parsedExpr2map = CombinatorParser.parseAll(CombinatorParser.top_level, whileMapString)
+  apply(storeLoop)(parsedExpr2map.get)
+  test("loop map test") { assert(storeLoop.toString() === whileMap )}
 
   // condition test
+  var storeCond = MMap[String, Num]()
   val parsedExpr3 = CombinatorParser.parseAll(CombinatorParser.statement, conditionString)
   test("condition parser test") { assert(parsedExpr3.get === conditionAST) }
   test("condition unparser test") { assert(toUnparsed(parsedExpr3.get) === conditionUnpars) }
+  val parsedExpr3map = CombinatorParser.parseAll(CombinatorParser.top_level, condMapString)
+  apply(storeCond)(parsedExpr3map.get)
+  test("condition map test") { assert(storeCond.toString() === condMap )}
 
   // block test
   val parsedExpr4 = CombinatorParser.parseAll(CombinatorParser.statement, blockString)
