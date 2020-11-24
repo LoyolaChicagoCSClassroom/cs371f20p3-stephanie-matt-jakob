@@ -22,7 +22,7 @@ class Test extends AnyFunSuite {
   test("evaluate(p)") { assert(evaluate(complex1) === -1) }
   test("size(p)") { assert(size(complex1) === 9) }
   test("height(p)") { assert(height(complex1) === 4) }
-  test("evaluate(q)") { assert(evaluate(complex2) === 0) }
-  test("size(q)") { assert(size(complex2) === 10) }
-  test("height(q)") { assert(height(complex2) === 5) }
+  test("evaluate(q)") { assert(evaluate(complex2) === 96) }
+  test("size(q)") { assert(size(complex2) === 19) }
+  test("height(q)") { assert(height(complex2) === 7) }
 }
