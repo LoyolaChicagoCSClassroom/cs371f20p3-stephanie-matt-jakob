@@ -128,4 +128,12 @@ object TestFixtures {
     )
 
   val complex1string2 = "if(-3+4+5*6){while(0){x=3;y=5;{xy=88;}}}"
+
+  val assignmentMapString =  "y = 1;"
+
+  val assignmentMap = "HashMap(y -> Num(1))"
+
+  val blockMapString =  "{x = 0; y = 1;}"
+
+  val blockMap = "HashMap(x -> Num(0), y -> Num(1))"
 }
