@@ -94,6 +94,14 @@ object Execute_num {
       }
       Success(Num(0))
     }
+    case Cond(x,y,z) => {
+      if (apply(store)(x) != Success(Num(0))) {
+        apply(store)(y)
+      }
+      else{
+        apply(store)(z)
+      }
+    }
   }
 
 }

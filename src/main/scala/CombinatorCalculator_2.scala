@@ -1,6 +1,6 @@
 package edu.luc.cs.laufer.cs371.expressions
 import scala.collection.mutable.{ Map => MMap }
-import Execute_num_tsf._
+import Execute_num._
 
 object CombinatorCalculator_2 extends App {
 
@@ -21,7 +21,7 @@ object CombinatorCalculator_2 extends App {
       // Doing the execute stuff
       println("Executing the infix expression...")
       println("It evaluates to " + apply(store)(expr))
-      println("Memory: " + store.toString())
+      println("Memory: " + store.toString()  + "\n")
     }
   }
 
