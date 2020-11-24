@@ -1,7 +1,8 @@
 package edu.luc.cs.laufer.cs371.expressions
 
 import org.scalatest.funsuite.AnyFunSuite
-
+import scala.collection.mutable.{ Map => MMap }
+import Execute_num._
 import behaviors._
 import TestFixtures._
 import scala.collection.mutable.{ Map => MMap }
@@ -16,6 +17,9 @@ object MainCombinatorParser extends App {
 }
 
 class TestCombinatorParser extends AnyFunSuite {
+  // Prepating an empty map for the store function
+  var store = MMap[String, Num]()
+
   // assignment test
   val parsedExpr = CombinatorParser.parseAll(CombinatorParser.statement, assignmentString)
   test("assignment parser test") { assert(parsedExpr.get === assignment) }
@@ -49,4 +53,15 @@ class TestCombinatorParser extends AnyFunSuite {
   val parsedExpr6 = CombinatorParser.parseAll(CombinatorParser.statement, complex1string2)
   test("complex 1 parser test") { assert(parsedExpr5.get === complex1) }
   test("complex 2 parser test") { assert(parsedExpr6.get === complex2) }
+
+  //assignment map test
+  val parsedExpr7 = CombinatorParser.parseAll(CombinatorParser.statement, assignmentMapString)
+  apply(store)(parsedExpr7.get)
+  test("assignment map test"){ assert(store.toString === assignmentMap)}
+
+  //block map test
+  val parsedExpr8 = CombinatorParser.parseAll(CombinatorParser.statement, blockMapString)
+  apply(store)(parsedExpr8.get)
+  test("block map test"){ assert(store.toString === blockMap)}
+
 }
