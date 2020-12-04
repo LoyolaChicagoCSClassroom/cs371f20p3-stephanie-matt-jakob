@@ -6,15 +6,16 @@ import ast._
 
 object CombinatorParser extends JavaTokenParsers {
 
-  /** expr ::= term { { "+" | "-" } term }* */
-  // a statement has to have a ; at the end, differentiate it from an expression
-  def expr: Parser[Expr] =
-    term ~! rep(("+" | "-") ~ term) ^^ {
-      case l ~ x => x.foldLeft(l) {
-        case (res, "+" ~ r) => Plus(res, r)
-        case (res, "-" ~ r) => Minus(res, r)
-      }
-    }
+  /** factor ::= wholeNumber | "+" factor | "-" factor | "(" expr ")" */
+  /* need to add factor ::= ident | ... when ident ::= [a-zA-Z] [a-zA-Z0-9]* */
+  // ^^ is a top level seperation, whatever is to the left of the character, the right is the semenatic action
+  def factor: Parser[Expr] = (
+    ident ~ "{" ~ "." ~ ident ^^ {case i ~ _ ~ _ ~ s => Select(i, s)}
+    | wholeNumber ^^ { case s => Constant(s.toInt) }
+    | "+" ~> factor ^^ { case e => e }
+    | "-" ~> factor ^^ { case e => UMinus(e) }
+    | "(" ~ expr ~ ")" ^^ { case _ ~ e ~ _ => e }
+    | ident ^^ { case i => Variable(i) })
 
   /** term ::= factor { { "*" | "/" | "%" } factor }* */
   def term: Parser[Expr] =
@@ -26,15 +27,20 @@ object CombinatorParser extends JavaTokenParsers {
       }
     }
 
-  /** factor ::= wholeNumber | "+" factor | "-" factor | "(" expr ")" */
-  /* need to add factor ::= ident | ... when ident ::= [a-zA-Z] [a-zA-Z0-9]* */
-  // ^^ is a top level seperation, whatever is to the left of the character, the right is the semenatic action
-  def factor: Parser[Expr] = (
-    wholeNumber ^^ { case s => Constant(s.toInt) }
-    | "+" ~> factor ^^ { case e => e }
-    | "-" ~> factor ^^ { case e => UMinus(e) }
-    | "(" ~ expr ~ ")" ^^ { case _ ~ e ~ _ => e }
-    | ident ^^ { case i => Variable(i) })
+  /** expr ::= term { { "+" | "-" } term }* */
+  // a statement has to have a ; at the end, differentiate it from an expression
+  def expr: Parser[Expr] =
+    term ~! rep(("+" | "-") ~ term) ^^ {
+      case l ~ x => x.foldLeft(l) {
+        case (res, "+" ~ r) => Plus(res, r)
+        case (res, "-" ~ r) => Minus(res, r)
+      }
+    }
+
+  // TODO: is field more like expression or assignment? 
+  // def field: Parser[Expr] = (
+  //   ident ~ ":" ~ expr ^^ { case ss => what }
+  // )
 
   // assignment: ident "=" expression ";"
   def assignment: Parser[Expr] = (
@@ -57,20 +63,13 @@ object CombinatorParser extends JavaTokenParsers {
   // | rep(statement) ^^ { case ss => Block(ss: _*) }
   )
 
-  def top_level: Parser[Expr] = (
-    rep(statement) ^^ { case ss => Block(ss: _*) })
 
   // statement: expression ";" | assignment | conditional | loop | block
   def statement: Parser[Expr] = (
     expr ~ ";" ^^ { case e ~ _ => e }
     | assignment | conditional | loop | block)
+
+  // top level 
+  def top_level: Parser[Expr] = (
+    rep(statement) ^^ { case ss => Block(ss: _*) })
 }
-
-// // attempt at more than one colon
-// | ident ~! rep("=" ~ expr <~ ";") ^^ {
-//   case l ~ x => x.foldLeft(l) {
-//     case (res, s ~ r) => Assign(Variable(s), r)
-//   }
-// }
-
-// | ident ^^ { case i if ((new Regex("[a-zA-Z] [a-zA-Z0-9]*") findAllIn i).filter(_.toString != " ").length > 0) => Variable(i) })

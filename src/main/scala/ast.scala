@@ -17,3 +17,6 @@ case class Block(expressions: Expr*) extends Expr
 case class Cond(guard: Expr, thenBranch: Expr, elseBranch: Expr) extends Expr // the elsebranch can be a block of zero elements
 case class Loop(guard: Expr, body: Expr) extends Expr
 case class Assign(left: Expr, right: Expr) extends BinaryExpr(left, right) // maybe
+
+// case class Select(expr: Expr, field: Expr) extends Expr
+// case class Struct(map: Expr) extends Expr
