@@ -31,9 +31,13 @@ object CombinatorCalculator extends App {
   if (args.length > 0) {
     processExpr(args mkString " ", MMap[String, Num]())
   } else {
+    println()
+    print("Memory: " + store.toString()  + "\n")
     print("Enter infix expression: ")
     scala.io.Source.stdin.getLines() foreach { line =>
       processExpr(line, store)
+      println()
+      print("Memory: " + store.toString()  + "\n")
       print("Enter infix expression: ")
     }
   }
