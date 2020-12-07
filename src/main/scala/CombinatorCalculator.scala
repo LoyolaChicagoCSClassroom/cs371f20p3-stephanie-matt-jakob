@@ -4,7 +4,7 @@ import Execute_num._
 
 object CombinatorCalculator extends App {
 
-  def processExpr(input: String, store: MMap[String, Num]): Unit = {
+  def processExpr(input: String, store: MMap[String, Value]): Unit = {
     println("You entered: " + input)
     val result = CombinatorParser.parseAll(CombinatorParser.top_level, input)
     if (result.isEmpty) {
@@ -26,10 +26,10 @@ object CombinatorCalculator extends App {
   }
 
   // Prepating an empty map for the store function
-  var store = MMap[String, Num]()
+  var store = MMap[String, Value]()
 
   if (args.length > 0) {
-    processExpr(args mkString " ", MMap[String, Num]())
+    processExpr(args mkString " ", MMap[String, Value]())
   } else {
     println()
     print("Memory: " + store.toString()  + "\n")

@@ -6,13 +6,17 @@ import ast._
 /** An interpreter for expressions and statements. */
 object Execute_num {
 
+  // adding the two main types
+  type Instance = MMap[String, Value]
+  type Store = Instance
+
   // adding the sealed trait Value and its Num case class
   sealed trait Value
   case class Num(value: Int) extends Value
+  case class Ins(value: Instance) extends Value
 
-  // adding the two main types
-  type Store = MMap[String, Num]
-  type Result = Try[Num]
+  // the result of a successful or fauled computation 
+  type Result = Try[Value]
 
   /** functions with working with store and Variable. */
   // checks to see if the name is in the memory hash map aka store
@@ -34,7 +38,7 @@ object Execute_num {
   }
 
   // gets the int from inside a Num wrapper
-  def getIntfromNum(num: Num): Int = num match {
+  def getIntfromNum(num: Value): Int = num match {
     case Num(x) => x
   }
 
@@ -77,14 +81,15 @@ object Execute_num {
     }
     case Block(ss @ _*) => {
       val i = ss.iterator
-      var result: Num = Num(0)
+      // var result: Num = Num(0)
+      var result: Int = 0
       while (i.hasNext) {
         apply(store)(i.next()) match {
-          case Success(r) => result = r
+          case Success(r) => result = getIntfromNum(r)
           case f @ Failure(_) => return f
         }
       }
-      Success(result)
+      Success(Num(result))
     }
     case Loop(guard, body) => {
       var gvalue = apply(store)(guard)
