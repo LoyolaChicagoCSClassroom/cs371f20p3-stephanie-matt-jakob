@@ -16,7 +16,8 @@ object CombinatorParser extends JavaTokenParsers {
     | "+" ~> factor ^^ { case e => e }
     | "-" ~> factor ^^ { case e => UMinus(e) }
     | "(" ~ expr ~ ")" ^^ { case _ ~ e ~ _ => e }
-    | ident ^^ { case i => Variable(i) })
+    | ident ^^ { case i => Variable(i) }
+    | struct)
 
   /** term ::= factor { { "*" | "/" | "%" } factor }* */
   def term: Parser[Expr] =

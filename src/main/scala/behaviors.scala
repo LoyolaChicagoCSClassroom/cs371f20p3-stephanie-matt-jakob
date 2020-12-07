@@ -60,11 +60,16 @@ object behaviors {
     case Div(l, r) => buildExprString(prefix, "Div", toFormattedString(prefix)(l), toFormattedString(prefix)(r))
     case Mod(l, r) => buildExprString(prefix, "Mod", toFormattedString(prefix)(l), toFormattedString(prefix)(r))
     case Assign(l, r) => buildExprString(prefix, "Assign", toFormattedString(prefix)(l), toFormattedString(prefix)(r))
+    case Field(k, v) => buildExprString(prefix, "Field", k, toFormattedString(prefix)(v))
     case Block(statements @ _*) => {
       // Block top level, pass in all formated exprs to build urnary string
       val block_list = statements.map(s => toFormattedString(prefix)(s))
       buildBlockExprString(prefix, "Block", block_list: _*)
       // buildExprString(prefix, "Assign", toFormattedString(prefix)(l), toFormattedString(prefix)(r))
+    }
+    case Struct(fields @ _*) => {
+      val struct_list = fields.map(s => toFormattedString(prefix)(s))
+      buildStructExprString(prefix, "Struct", struct_list: _*)
     }
     case Loop(x, y) => buildExprString(prefix, "Loop", toFormattedString(prefix)(x), toFormattedString(prefix)(y))
     case Cond(x, y, z) => buildExprString(prefix, "Cond", toFormattedString(prefix)(x), toFormattedString(prefix)(y) + toFormattedString(prefix)(z))
@@ -84,6 +89,18 @@ object behaviors {
   }
 
   def buildBlockExprString(prefix: String, nodeString: String, exprStrings: String*) = {
+    val result = new StringBuilder(prefix)
+    result.append(nodeString)
+    result.append("(")
+    exprStrings.map(s => {
+      result.append(s)
+    })
+    result.append(")")
+    result.append(",")
+    result.toString
+  }
+
+  def buildStructExprString(prefix: String, nodeString: String, exprStrings: String*) = {
     val result = new StringBuilder(prefix)
     result.append(nodeString)
     result.append("(")
@@ -116,10 +133,15 @@ object behaviors {
     case Div(l, r) => buildExprUnparsed(prefix, " / ", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
     case Mod(l, r) => buildExprUnparsed(prefix, " % ", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
     case Assign(l, r) => buildAssignExprUnparsed(prefix, " = ", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
+    case Field(k, v) => buildFieldExprUnparsed(prefix, ": ", k, toUnparsed(prefix)(v))
     case Block(statements @ _*) => {
       // Block top level, pass in all formated exprs to build urnary string
       val block_list = statements.map(s => toUnparsed(prefix + INDENT)(s)) //add indent after prefix
       buildBlockExprUnparsed(prefix, block_list: _*)
+    }
+    case Struct(fields @ _*) => {
+      val field_list = fields.map(s => toUnparsed(prefix)(s))
+      buildStructExprUnparsed(prefix, field_list: _*)
     }
     case Loop(x, y) => buildLoopExprUnparsed(prefix, "while (", toUnparsed(prefix)(x), toUnparsed(prefix)(y))
     case Cond(x, y, z) => buildCondExprUnparsed(prefix, "if (", toUnparsed(prefix)(x), toUnparsed(prefix)(y) + " else" + toUnparsed(prefix)(z))
@@ -152,6 +174,14 @@ object behaviors {
     result.toString
   }
 
+  def buildFieldExprUnparsed(prefix: String, nodeString: String, leftString: String, rightString: String) = {
+    val result = new StringBuilder()
+    result.append(leftString)
+    result.append(nodeString)
+    result.append(rightString)
+    result.toString
+  }
+
   def buildExprUnparsed(prefix: String, nodeString: String, leftString: String, rightString: String) = {
     val result = new StringBuilder()
     result.append("(")
@@ -173,6 +203,22 @@ object behaviors {
     })
     result.append(EOL)
     result.append(prefix)
+    result.append("}")
+    result.toString
+  }
+
+  def buildStructExprUnparsed(prefix: String, exprStrings: String*) = {
+    val result = new StringBuilder()
+    result.append("{")
+    // result.append(EOL)
+    exprStrings.map(s => {
+      // result.append(EOL)
+      // result.append(prefix + INDENT)
+      result.append(s)
+      result.append(", ")
+    })
+    // result.append(EOL)
+    // result.append(prefix)
     result.append("}")
     result.toString
   }
