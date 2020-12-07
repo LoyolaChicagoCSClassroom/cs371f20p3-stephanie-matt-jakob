@@ -209,17 +209,16 @@ object behaviors {
 
   def buildStructExprUnparsed(prefix: String, exprStrings: String*) = {
     val result = new StringBuilder()
-    result.append("{")
-    // result.append(EOL)
+    result.append("{ ")
+    val iter = Iterator(exprStrings)
     exprStrings.map(s => {
-      // result.append(EOL)
-      // result.append(prefix + INDENT)
       result.append(s)
-      result.append(", ")
+      if(iter.hasNext) { 
+        result.append(", ")
+        iter.next()
+      }
     })
-    // result.append(EOL)
-    // result.append(prefix)
-    result.append("}")
+    result.append(" }")
     result.toString
   }
 
