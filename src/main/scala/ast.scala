@@ -17,9 +17,10 @@ case class Variable(value: String) extends Expr { require { value != null } }
 case class Block(expressions: Expr*) extends Expr
 case class Cond(guard: Expr, thenBranch: Expr, elseBranch: Expr) extends Expr // the elsebranch can be a block of zero elements
 case class Loop(guard: Expr, body: Expr) extends Expr
+// case class Assign(left: Seq[Expr], right: Expr) extends BinaryExpr(left, right) // maybe
 case class Assign(left: Expr, right: Expr) extends BinaryExpr(left, right) // maybe
 
-case class Select(expr: Expr, field: Expr) extends Expr
+case class Select(names: String*) extends Expr
 case class Field(name: String, value: Expr) extends Expr
 // case class Struct(map: Expr*) extends Expr
 case class Struct(map: Map[String, Expr]) extends Expr
