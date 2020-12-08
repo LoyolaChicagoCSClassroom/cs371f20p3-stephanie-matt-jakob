@@ -139,10 +139,10 @@ object behaviors {
       val block_list = statements.map(s => toUnparsed(prefix + INDENT)(s)) //add indent after prefix
       buildBlockExprUnparsed(prefix, block_list: _*)
     }
-    // case Struct(map) => {
-    //   // val field_list = fields.map(s => toUnparsed(prefix)(s))
-    //   // buildStructExprUnparsed(prefix, map)
-    // }
+    case Struct(map) => {
+      val unparsed_map = map.map(kv => (kv._1, toUnparsed(prefix)(kv._2)))
+      buildStructExprUnparsed(prefix, unparsed_map)
+    }
     case Loop(x, y) => buildLoopExprUnparsed(prefix, "while (", toUnparsed(prefix)(x), toUnparsed(prefix)(y))
     case Cond(x, y, z) => buildCondExprUnparsed(prefix, "if (", toUnparsed(prefix)(x), toUnparsed(prefix)(y) + " else" + toUnparsed(prefix)(z))
   }
@@ -174,13 +174,13 @@ object behaviors {
     result.toString
   }
 
-  def buildFieldExprUnparsed(prefix: String, nodeString: String, leftString: String, rightString: String) = {
-    val result = new StringBuilder()
-    result.append(leftString)
-    result.append(nodeString)
-    result.append(rightString)
-    result.toString
-  }
+  // def buildFieldExprUnparsed(prefix: String, nodeString: String, leftString: String, rightString: String) = {
+  //   val result = new StringBuilder()
+  //   result.append(leftString)
+  //   result.append(nodeString)
+  //   result.append(rightString)
+  //   result.toString
+  // }
 
   def buildExprUnparsed(prefix: String, nodeString: String, leftString: String, rightString: String) = {
     val result = new StringBuilder()
@@ -207,20 +207,22 @@ object behaviors {
     result.toString
   }
 
-  // def buildStructExprUnparsed(prefix: String, map) = {
-  //   val result = new StringBuilder()
-  //   result.append("{ ")
-  //   val iter = Iterator(exprStrings)
-  //   exprStrings.map(s => {
-  //     result.append(s)
-  //     if(iter.hasNext) { 
-  //       result.append(", ")
-  //       iter.next()
-  //     }
-  //   })
-  //   result.append(" }")
-  //   result.toString
-  // }
+  def buildStructExprUnparsed(prefix: String, map: Map[String, String]) = {
+    val result = new StringBuilder()
+    result.append("{ ")
+    val iter = Iterator(map)
+    map.map(kv => {
+      result.append(kv._1)
+      result.append(": ")
+      result.append(kv._2)
+      if(iter.hasNext) { 
+        result.append(", ")
+        iter.next()
+      }
+    })
+    result.append(" }")
+    result.toString
+  }
 
   def buildUnaryExprUnparsed(prefix: String, exprString: String) = {
     val result = new StringBuilder()
