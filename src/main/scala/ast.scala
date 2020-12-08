@@ -1,5 +1,5 @@
 package edu.luc.cs.laufer.cs371.expressions.ast
-import scala.collection.immutable.{ Map => MMap }
+import scala.collection.immutable.Map
 
 /** An initial algebra of arithmetic expressions. */
 sealed trait Expr
@@ -21,4 +21,5 @@ case class Assign(left: Expr, right: Expr) extends BinaryExpr(left, right) // ma
 
 case class Select(expr: Expr, field: Expr) extends Expr
 case class Field(name: String, value: Expr) extends Expr
-case class Struct(map: Expr*) extends Expr
+// case class Struct(map: Expr*) extends Expr
+case class Struct(map: Map[String, Expr]) extends Expr

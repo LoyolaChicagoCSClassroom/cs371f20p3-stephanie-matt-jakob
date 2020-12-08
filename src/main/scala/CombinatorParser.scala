@@ -42,7 +42,7 @@ object CombinatorParser extends JavaTokenParsers {
   // TODO: is field more like expression or assignment? 
   // field  ::= ident ":" expr
   def field: Parser[Expr] = (
-    ident ~ ":" ~ expr ^^ { case s ~ _ ~ r => Field(s, r) }
+    ident ~ ":" ~ expr ^^ { case s ~ _ ~ r => Struct(Map(s -> r)) }
   )
 
   // assignment: ident "=" expression ";"
@@ -67,8 +67,12 @@ object CombinatorParser extends JavaTokenParsers {
   )
 
   def struct: Parser[Expr] = (
-    "{" ~ "}" ^^ { case _ => Struct() }
-    | "{" ~> repsep(field, ",") <~ "}" ^^ { case ss => Struct(ss: _*) }
+    "{" ~ "}" ^^ { case _ => Struct(Map()) }
+    | "{" ~> repsep(field, ",") <~ "}" ^^ {
+      case x => Struct(x.foldLeft(Map.empty[String, Expr]) { //start with initial empty map and fold left on maps
+        case (res, r) => { res ++ r.asInstanceOf[Struct].map }
+      })
+    }
   // | rep(statement) ^^ { case ss => Block(ss: _*) }
   )
 

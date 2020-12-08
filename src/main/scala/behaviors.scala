@@ -1,6 +1,6 @@
 package edu.luc.cs.laufer.cs371.expressions
 import scala.collection.mutable.ListBuffer
-
+import scala.collection.immutable.Map
 import ast._
 
 object behaviors {
@@ -60,16 +60,16 @@ object behaviors {
     case Div(l, r) => buildExprString(prefix, "Div", toFormattedString(prefix)(l), toFormattedString(prefix)(r))
     case Mod(l, r) => buildExprString(prefix, "Mod", toFormattedString(prefix)(l), toFormattedString(prefix)(r))
     case Assign(l, r) => buildExprString(prefix, "Assign", toFormattedString(prefix)(l), toFormattedString(prefix)(r))
-    case Field(k, v) => buildExprString(prefix, "Field", k, toFormattedString(prefix)(v))
+    // case Field(k, v) => buildExprString(prefix, "Field", k, toFormattedString(prefix)(v))
     case Block(statements @ _*) => {
       // Block top level, pass in all formated exprs to build urnary string
       val block_list = statements.map(s => toFormattedString(prefix)(s))
       buildBlockExprString(prefix, "Block", block_list: _*)
       // buildExprString(prefix, "Assign", toFormattedString(prefix)(l), toFormattedString(prefix)(r))
     }
-    case Struct(fields @ _*) => {
-      val struct_list = fields.map(s => toFormattedString(prefix)(s))
-      buildStructExprString(prefix, "Struct", struct_list: _*)
+    case Struct(map) => {
+      // val struct_list = fields.map(s => toFormattedString(prefix)(s))
+      buildStructExprString(prefix, "Struct", map)
     }
     case Loop(x, y) => buildExprString(prefix, "Loop", toFormattedString(prefix)(x), toFormattedString(prefix)(y))
     case Cond(x, y, z) => buildExprString(prefix, "Cond", toFormattedString(prefix)(x), toFormattedString(prefix)(y) + toFormattedString(prefix)(z))
@@ -100,15 +100,15 @@ object behaviors {
     result.toString
   }
 
-  def buildStructExprString(prefix: String, nodeString: String, exprStrings: String*) = {
+  def buildStructExprString(prefix: String, nodeString: String, map: Map[String, Expr]) = {
     val result = new StringBuilder(prefix)
     result.append(nodeString)
     result.append("(")
-    exprStrings.map(s => {
-      result.append(s)
-    })
+    // exprStrings.map(s => {
+    //   result.append(s)
+    // })
+    result.append(map.toString)
     result.append(")")
-    result.append(",")
     result.toString
   }
 
@@ -133,16 +133,16 @@ object behaviors {
     case Div(l, r) => buildExprUnparsed(prefix, " / ", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
     case Mod(l, r) => buildExprUnparsed(prefix, " % ", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
     case Assign(l, r) => buildAssignExprUnparsed(prefix, " = ", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
-    case Field(k, v) => buildFieldExprUnparsed(prefix, ": ", k, toUnparsed(prefix)(v))
+    // case Field(k, v) => buildFieldExprUnparsed(prefix, ": ", k, toUnparsed(prefix)(v))
     case Block(statements @ _*) => {
       // Block top level, pass in all formated exprs to build urnary string
       val block_list = statements.map(s => toUnparsed(prefix + INDENT)(s)) //add indent after prefix
       buildBlockExprUnparsed(prefix, block_list: _*)
     }
-    case Struct(fields @ _*) => {
-      val field_list = fields.map(s => toUnparsed(prefix)(s))
-      buildStructExprUnparsed(prefix, field_list: _*)
-    }
+    // case Struct(map) => {
+    //   // val field_list = fields.map(s => toUnparsed(prefix)(s))
+    //   // buildStructExprUnparsed(prefix, map)
+    // }
     case Loop(x, y) => buildLoopExprUnparsed(prefix, "while (", toUnparsed(prefix)(x), toUnparsed(prefix)(y))
     case Cond(x, y, z) => buildCondExprUnparsed(prefix, "if (", toUnparsed(prefix)(x), toUnparsed(prefix)(y) + " else" + toUnparsed(prefix)(z))
   }
@@ -207,20 +207,20 @@ object behaviors {
     result.toString
   }
 
-  def buildStructExprUnparsed(prefix: String, exprStrings: String*) = {
-    val result = new StringBuilder()
-    result.append("{ ")
-    val iter = Iterator(exprStrings)
-    exprStrings.map(s => {
-      result.append(s)
-      if(iter.hasNext) { 
-        result.append(", ")
-        iter.next()
-      }
-    })
-    result.append(" }")
-    result.toString
-  }
+  // def buildStructExprUnparsed(prefix: String, map) = {
+  //   val result = new StringBuilder()
+  //   result.append("{ ")
+  //   val iter = Iterator(exprStrings)
+  //   exprStrings.map(s => {
+  //     result.append(s)
+  //     if(iter.hasNext) { 
+  //       result.append(", ")
+  //       iter.next()
+  //     }
+  //   })
+  //   result.append(" }")
+  //   result.toString
+  // }
 
   def buildUnaryExprUnparsed(prefix: String, exprString: String) = {
     val result = new StringBuilder()
