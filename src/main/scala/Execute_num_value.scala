@@ -29,7 +29,7 @@ object Execute_num_value {
   // puts a variable into the hashmap has a type Num
   // the function has a dummy return variable of Num, the important part is that it is now in the store
   def putVariableinStore(store: Store)(s: Expr)(num: Result): Value = s match {
-    case Variable(name) => { store.put(name.toString(), getNumfromResult(num)); getNumfromResult(num) }
+    case Variable(name) => { store.put(name.toString(), getValuefromResult(num)); getValuefromResult(num) }
   }
 
   // gets the name of the item inside the Variable wrapper
@@ -43,20 +43,11 @@ object Execute_num_value {
   }
 
   // num
-  def getNumfromResult(num: Result): Value = num match {
+  def getValuefromResult(num: Result): Value = num match {
     case Success(Num(x)) => Num(x)
-    //  case Success(Ins(result)) => Ins(result)
+     case Success(Ins(result)) => Ins(result)
   }
 
-  // // field
-  // def getExprFromField(field: Expr): Expr = field match {
-  //   case Field(name, value) => value
-  // }
-
-  // // field 
-  // def getNamefromField(field: Expr): String = field match {
-  //   case Field(name, value) => name
-  // }
 
   /** Looks up a variable in memory. */
   def lookup(store: Store)(name: String): Result =
@@ -87,13 +78,12 @@ object Execute_num_value {
       } else {
         val rvalue = apply(store)(right)
         val lvalue = getVariablefromStore(store)(left)
-        store.put(lvalue, getNumfromResult(rvalue))
+        store.put(lvalue, getValuefromResult(rvalue))
       }
       Success(Num(0))
     }
     case Block(ss @ _*) => {
       val i = ss.iterator
-      // var result: Num = Num(0)
       var result: Int = 0
       while (i.hasNext) {
         apply(store)(i.next()) match {
@@ -119,19 +109,15 @@ object Execute_num_value {
         apply(store)(z)
       }
     }
-    // case Struct(map @ _*) => {
-    //   val i = map.iterator
-    //   var result: Instance = MMap[String, Value]()
-    //   while (i.hasNext) {
-    //     var curr_name = getNamefromField(i.next())
-    //     var curr_exp = getExprFromField(i.next()) 
-    //     apply(store)(curr_exp) match {
-    //       case Success(r) => result.put(curr_name, r)
-    //       case f @ Failure(_) => return f
-    //     }
-    //   }
-    //   Success(Ins(result))
-    //  }
+    case Struct(map) => {
+      var result: Instance = MMap[String, Value]()
+      map foreach { case (key, value) => {
+        apply(store)(value) match {
+          case Success(r) => result.put(key, r)
+          case f @ Failure(_) => return f
+        }
+      }}
+      Success(Ins(result))
+    }
   }
-
 }

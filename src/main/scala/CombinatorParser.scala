@@ -10,8 +10,6 @@ object CombinatorParser extends JavaTokenParsers {
   /* need to add factor ::= ident | ... when ident ::= [a-zA-Z] [a-zA-Z0-9]* */
   // ^^ is a top level seperation, whatever is to the left of the character, the right is the semenatic action
   def factor: Parser[Expr] = (
-    // ident ~ "{" ~ "." ~ ident ^^ {case i ~ _ ~ _ ~ s => Select(i, s)}
-    // | 
     wholeNumber ^^ { case s => Constant(s.toInt) }
     | "+" ~> factor ^^ { case e => e }
     | "-" ~> factor ^^ { case e => UMinus(e) }
@@ -41,7 +39,7 @@ object CombinatorParser extends JavaTokenParsers {
       }
     }
 
-  // TODO: is field more like expression or assignment? 
+    
   // field  ::= ident ":" expr
   def field: Parser[Expr] = (
     ident ~ ":" ~ expr ^^ { case s ~ _ ~ r => Struct(Map(s -> r)) }
@@ -70,6 +68,7 @@ object CombinatorParser extends JavaTokenParsers {
   // | rep(statement) ^^ { case ss => Block(ss: _*) }
   )
 
+  // struct ::= "{" "}" | "{" field { "," field }* "}"
   def struct: Parser[Expr] = (
     "{" ~ "}" ^^ { case _ => Struct(Map()) }
     | "{" ~> repsep(field, ",") <~ "}" ^^ {
