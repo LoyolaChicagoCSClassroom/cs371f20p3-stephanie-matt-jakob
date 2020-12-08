@@ -71,6 +71,8 @@ object behaviors {
       // val struct_list = fields.map(s => toFormattedString(prefix)(s))
       buildStructExprString(prefix, "Struct", map)
     }
+
+    
     case Loop(x, y) => buildExprString(prefix, "Loop", toFormattedString(prefix)(x), toFormattedString(prefix)(y))
     case Cond(x, y, z) => buildExprString(prefix, "Cond", toFormattedString(prefix)(x), toFormattedString(prefix)(y) + toFormattedString(prefix)(z))
   }

@@ -47,9 +47,11 @@ object CombinatorParser extends JavaTokenParsers {
 
   // assignment: ident "=" expression ";"
   def assignment: Parser[Expr] = (
-    ident ~ "=" ~ expr ~ ";" ^^ { case s ~ _ ~ r ~ _ => Assign(Variable(s), r) }
-    // repsep(ident, ".") ~ "=" ~ expr ~ ";" ^^ { case i ~ _ ~ e ~ _ => Assign(Variable(i: _*), e) }
-    )
+    ident ~ "=" ~ expr ~ ";" ^^ { case s ~ _ ~ r ~ _ => Assign(Variable(s), r) })
+  
+  // assignment  ::= ident { "." ident }* "=" expression ";"
+  def multi_assignment: Parser[Expr] = (
+    repsep(ident, ".") ~ "=" ~ expr ~ ";" ^^ { case i ~ _ ~ e ~ _ => MultiAssign(i, e) })
 
   // conditional: "if" "(" expression ")" block [ "else" block ]
   def conditional: Parser[Expr] = (
@@ -64,9 +66,7 @@ object CombinatorParser extends JavaTokenParsers {
 
   // block : "{" statement* "}"
   def block: Parser[Expr] = (
-    "{" ~> rep(statement) <~ "}" ^^ { case ss => Block(ss: _*) }
-  // | rep(statement) ^^ { case ss => Block(ss: _*) }
-  )
+    "{" ~> rep(statement) <~ "}" ^^ { case ss => Block(ss: _*) })
 
   // struct ::= "{" "}" | "{" field { "," field }* "}"
   def struct: Parser[Expr] = (
@@ -81,7 +81,7 @@ object CombinatorParser extends JavaTokenParsers {
   // statement: expression ";" | assignment | conditional | loop | block
   def statement: Parser[Expr] = (
     expr ~ ";" ^^ { case e ~ _ => e }
-    | assignment | conditional | loop | block | struct)
+    | multi_assignment | conditional | loop | block | struct)
 
   // top level 
   def top_level: Parser[Expr] = (

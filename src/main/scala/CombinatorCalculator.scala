@@ -14,16 +14,16 @@ object CombinatorCalculator extends App {
       val expr = result.get
       println("Orig expr: ")
       println(expr)
-      println("The parsed expression is: ")
-      println(toFormattedString(expr))
-      // println("It has size " + size(expr) + " and height " + height(expr))
-      println("The unparsed expression is: ")
-      println(toUnparsed(expr))
+      // println("The parsed expression is: ")
+      // println(toFormattedString(expr))
+      // // println("It has size " + size(expr) + " and height " + height(expr))
+      // println("The unparsed expression is: ")
+      // println(toUnparsed(expr))
 
-      // Doing the execute stuff
-      println("Executing the infix expression...")
-      println("It evaluates to " + apply(store)(expr))
-      println("Memory: " + store.toString()  + "\n")
+      // // Doing the execute stuff
+      // println("Executing the infix expression...")
+      // println("It evaluates to " + apply(store)(expr))
+      // println("Memory: " + store.toString()  + "\n")
     }
   }
 

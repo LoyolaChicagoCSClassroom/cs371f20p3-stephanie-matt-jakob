@@ -28,7 +28,7 @@ object Execute_num {
 
   // puts a variable into the hashmap has a type Num
   // the function has a dummy return variable of Num, the important part is that it is now in the store
-  def putVariableinStore(store: Store)(s: Expr)(num: Result): Num = s match {
+  def putVariableinStore(store: Store)(s: Expr)(num: Result): Value = s match {
     case Variable(name) => { store.put(name.toString(), getNumfromResult(num)); getNumfromResult(num) }
   }
 
@@ -42,8 +42,20 @@ object Execute_num {
     case Num(x) => x
   }
 
-  def getNumfromResult(num: Result): Num = num match {
+  // num
+  def getNumfromResult(num: Result): Value = num match {
     case Success(Num(x)) => Num(x)
+     case Success(Ins(result)) => Ins(result)
+  }
+
+  // field
+  def getExprFromField(field: Expr): Expr = field match {
+    case Field(name, value) => value
+  }
+
+  // field 
+  def getNamefromField(field: Expr): String = field match {
+    case Field(name, value) => name
   }
 
   /** Looks up a variable in memory. */
@@ -107,6 +119,19 @@ object Execute_num {
         apply(store)(z)
       }
     }
+    // case Struct(map @ _*) => {
+    //   val i = map.iterator
+    //   var result: Instance = MMap[String, Value]()
+    //   while (i.hasNext) {
+    //     var curr_exp = getExprFromField(i.next()) 
+    //     var curr_name = getNamefromField(i.next())
+    //     apply(store)(curr_exp) match {
+    //       case Success(r) => result.put(curr_name, r)
+    //       case f @ Failure(_) => return f
+    //     }
+    //   }
+    //   Success(Ins(result))
+    //  }
   }
 
 }
