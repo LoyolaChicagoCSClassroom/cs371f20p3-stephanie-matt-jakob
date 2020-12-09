@@ -14,8 +14,8 @@ object CombinatorParser extends JavaTokenParsers {
     | "+" ~> factor ^^ { case e => e }
     | "-" ~> factor ^^ { case e => UMinus(e) }
     | "(" ~ expr ~ ")" ^^ { case _ ~ e ~ _ => e }
-    | ident ^^ { case i => Variable(i) }
     | struct
+    | ident ^^ { case i => Variable(i) }
     | repsep(ident, ".") ^^ { case i => Select(i: _*) }
     )
 
@@ -39,11 +39,9 @@ object CombinatorParser extends JavaTokenParsers {
       }
     }
 
-    
   // field  ::= ident ":" expr
   def field: Parser[Expr] = (
-    ident ~ ":" ~ expr ^^ { case s ~ _ ~ r => Struct(Map(s -> r)) }
-  )
+    ident ~ ":" ~ expr ^^ { case s ~ _ ~ r => Struct(Map(s -> r)) })
 
   // assignment: ident "=" expression ";"
   def assignment: Parser[Expr] = (

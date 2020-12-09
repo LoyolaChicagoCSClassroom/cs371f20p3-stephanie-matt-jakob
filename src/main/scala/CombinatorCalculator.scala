@@ -20,10 +20,10 @@ object CombinatorCalculator extends App {
       // println("The unparsed expression is: ")
       // println(toUnparsed(expr))
 
-      // // Doing the execute stuff
-      // println("Executing the infix expression...")
-      // println("It evaluates to " + apply(store)(expr))
-      // println("Memory: " + store.toString()  + "\n")
+      // Doing the execute stuff
+      println("Executing the infix expression...")
+      println("It evaluates to " + apply(store)(expr))
+      println("Memory: " + store.toString()  + "\n")
     }
   }
 
