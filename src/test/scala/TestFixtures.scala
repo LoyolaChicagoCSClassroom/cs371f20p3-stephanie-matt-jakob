@@ -7,8 +7,8 @@ object TestFixtures {
   val EOL = scala.util.Properties.lineSeparator
 
   val assignment = 
-    Assign(
-      Variable("x"),
+    MultiAssign(
+      List("x"),
       Constant(3)
     )
 
@@ -20,8 +20,8 @@ object TestFixtures {
     Loop(
       Constant(0),
       Block(
-        Assign(
-        Variable("y"),
+        MultiAssign(
+        List("y"),
         Constant(3)
         ),
       )
@@ -39,14 +39,14 @@ object TestFixtures {
     Cond(
       Constant(1),
       Block(
-        Assign(
-          Variable("x"),
+        MultiAssign(
+          List("x"),
           Constant(2)
         ),
       ),
       Block(
-        Assign(
-          Variable("x"),
+        MultiAssign(
+          List("x"),
           Constant(3)
         ),
       ),
@@ -62,17 +62,17 @@ object TestFixtures {
 
   val blockAST = 
     Block(
-      Assign(
-        Variable("r"),
+      MultiAssign(
+        List("r"),
         Plus(
-          Variable("r"),
-          Variable("x")
+          Select("r"),
+          Select("x")
         ),
       ),
-      Assign(
-        Variable("y"),
+      MultiAssign(
+        List("y"),
         Plus(
-          Variable("y"),
+          Select("y"),
           Constant(1)
         ),
       ),
@@ -115,17 +115,17 @@ object TestFixtures {
         Loop(
           Constant(0),
           Block(
-            Assign(
-              Variable("x"),
+            MultiAssign(
+              List("x"),
               Constant(3)
             ),
-            Assign(
-              Variable("y"),
+            MultiAssign(
+              List("y"),
               Constant(5)
             ),
             Block(
-              Assign(
-                Variable("xy"),
+              MultiAssign(
+                List("xy"),
                 Constant(88)
               ),
             ),
@@ -143,7 +143,7 @@ object TestFixtures {
 
   val blockMapString =  "{x = 0; y = 1;}"
 
-  val blockMap = "HashMap(x -> Num(0), y -> Num(1))"
+  val blockMap = "HashMap(x -> Num(0), y -> Num(1), r -> Num(5))"
 
   // Test fixture for if variable hasn't been assigned
   val throwErrorString = "z;"

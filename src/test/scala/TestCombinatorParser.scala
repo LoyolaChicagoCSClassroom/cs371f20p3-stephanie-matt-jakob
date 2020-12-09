@@ -45,7 +45,8 @@ class TestCombinatorParser extends AnyFunSuite {
   test("condition map test") { assert(storeCond.toString() === condMap )}
 
   // block test
-  var storeBlock = MMap[String, Value]()
+  var storeBlock: MMap[String, Value] = MMap("r" -> Num(5), "x"->Num(1), "y"->Num(9))
+  // HashMap(r -> Num(5), x -> Num(1), y -> Num(9))
   val parsedExpr4 = CombinatorParser.parseAll(CombinatorParser.statement, blockString)
   test("block parser test") { assert(parsedExpr4.get === blockAST) }
   test("block unparser test") { assert(toUnparsed(parsedExpr4.get) === blockUnpars) }
