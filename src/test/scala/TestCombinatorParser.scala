@@ -2,11 +2,11 @@ package edu.luc.cs.laufer.cs371.expressions
 
 import org.scalatest.funsuite.AnyFunSuite
 import scala.collection.mutable.{ Map => MMap }
-import Execute_num._
+import Execute_num_value._
 import behaviors._
 import TestFixtures._
 import scala.collection.mutable.{ Map => MMap }
-import Execute_num._
+import Execute_num_value._
 
 object MainCombinatorParser extends App {
   val parsedExpr = CombinatorParser.parseAll(CombinatorParser.expr, complex1string)
@@ -18,7 +18,7 @@ object MainCombinatorParser extends App {
 
 class TestCombinatorParser extends AnyFunSuite {
   // assignment test
-  var storeAssign = MMap[String, Num]()
+  var storeAssign = MMap[String, Value]()
   val parsedExpr = CombinatorParser.parseAll(CombinatorParser.statement, assignmentString)
   test("assignment parser test") { assert(parsedExpr.get === assignment) }
   test("assignment unparser test") { assert(toUnparsed(parsedExpr.get) === assignmentUnpars) }
@@ -27,7 +27,7 @@ class TestCombinatorParser extends AnyFunSuite {
   test("assignment map test"){ assert(storeAssign.toString === assignmentMap)}
 
   // loop test
-  var storeLoop = MMap[String, Num]()
+  var storeLoop = MMap[String, Value]()
   val parsedExpr2 = CombinatorParser.parseAll(CombinatorParser.statement, whileString)
   test("loop parser test") { assert(parsedExpr2.get === whileAST) }
   test("loop unparser test") { assert(toUnparsed(parsedExpr2.get) === whileUnpars) }
@@ -36,7 +36,7 @@ class TestCombinatorParser extends AnyFunSuite {
   test("loop map test") { assert(storeLoop.toString() === whileMap )}
 
   // condition test
-  var storeCond = MMap[String, Num]()
+  var storeCond = MMap[String, Value]()
   val parsedExpr3 = CombinatorParser.parseAll(CombinatorParser.statement, conditionString)
   test("condition parser test") { assert(parsedExpr3.get === conditionAST) }
   test("condition unparser test") { assert(toUnparsed(parsedExpr3.get) === conditionUnpars) }
@@ -45,7 +45,7 @@ class TestCombinatorParser extends AnyFunSuite {
   test("condition map test") { assert(storeCond.toString() === condMap )}
 
   // block test
-  var storeBlock = MMap[String, Num]()
+  var storeBlock = MMap[String, Value]()
   val parsedExpr4 = CombinatorParser.parseAll(CombinatorParser.statement, blockString)
   test("block parser test") { assert(parsedExpr4.get === blockAST) }
   test("block unparser test") { assert(toUnparsed(parsedExpr4.get) === blockUnpars) }
@@ -60,7 +60,7 @@ class TestCombinatorParser extends AnyFunSuite {
   test("complex 2 parser test") { assert(parsedExpr6.get === complex2) }
 
   // Error on unassigned var test
-  var storeError = MMap[String, Num]()
+  var storeError = MMap[String, Value]()
   val parsedExpr7 = CombinatorParser.parseAll(CombinatorParser.top_level, throwErrorString).get
   test("error on unassigned var test"){ assert(apply(storeError)(parsedExpr7).toString === throwErrorOutput)}
 }
