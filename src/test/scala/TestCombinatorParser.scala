@@ -70,12 +70,12 @@ class TestCombinatorParser extends AnyFunSuite {
   val parsedExpr8 = CombinatorParser.parseAll(CombinatorParser.statement, structString)
   val parsedExpr9 = CombinatorParser.parseAll(CombinatorParser.statement, selectFieldString)
   
-  test("struct creation parser test") { assert(parsedExpr8.get === struct) }
-  test("struct select parser test") { assert(parsedExpr9.get === selectField) }
+  test("struct creation parser test") { assert(parsedExpr8.get.toString === struct) }
+  test("struct select parser test") { assert(parsedExpr9.get.toString === selectField) }
 
   val parsedExpr10 = CombinatorParser.parseAll(CombinatorParser.statement, assignFieldString)
   val parsedExpr11 = CombinatorParser.parseAll(CombinatorParser.statement, fieldAddToStructString)
   
-  //test("struct assign map test") { assert(parsedExpr10.get === assignField) }
-  //test("add field to struct map test") { assert(parsedExpr11.get === fieldAddToStruct) }
+  test("struct assign map test") { assert(parsedExpr10.get.toString === assignField) }
+  test("add field to struct map test") { assert(parsedExpr11.get.toString === fieldAddToStruct) }
 }
