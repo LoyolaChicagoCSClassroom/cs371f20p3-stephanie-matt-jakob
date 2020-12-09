@@ -141,6 +141,9 @@ object behaviors {
     case Mod(l, r) => buildExprUnparsed(prefix, " % ", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
     case Assign(l, r) => buildAssignExprUnparsed(prefix, " = ", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
     // case Field(k, v) => buildFieldExprUnparsed(prefix, ": ", k, toUnparsed(prefix)(v))
+    case Select(selectors @ _*) => {
+      buildSelectExprUnparsed(prefix, selectors: _*)
+    }
     case Block(statements @ _*) => {
       // Block top level, pass in all formated exprs to build urnary string
       val block_list = statements.map(s => toUnparsed(prefix + INDENT)(s)) //add indent after prefix
@@ -245,6 +248,11 @@ object behaviors {
       }
     })
     result.append(" }")
+    result.toString
+  }
+  def buildSelectExprUnparsed(prefix: String, selectorStrings: String*) = {
+    val result = new StringBuilder()
+    result.append(selectorStrings.mkString("."))
     result.toString
   }
 
