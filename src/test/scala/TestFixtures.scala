@@ -149,4 +149,21 @@ object TestFixtures {
   val throwErrorString = "z;"
 
   val throwErrorOutput = "Failure(java.lang.NoSuchFieldException: z)"
+
+  val structString = "x = { a: 3 + 4, b: 5 + 6 };"
+
+  val struct = "Block(MultiAssign((x),Struct(Map(a -> Plus(Constant(3),Constant(4)), b -> Plus(Constant(5),Constant(6)))))),"
+ 
+  val selectFieldString = "x.a;"
+
+  val selectField = "Block(Select(x.a))"
+ 
+  val assignFieldString = "x.a = 9;" 
+
+  val assignField = "HashMap(x -> Ins(HashMap(a -> Num(9), b -> Num(11))))"
+
+  val fieldAddToStructString = "x.c = 13;"
+  
+  val fieldAddToStruct = "HashMap(x -> Ins(HashMap(a -> Num(9), b -> Num(11), c -> Num(13))))"
+
 }

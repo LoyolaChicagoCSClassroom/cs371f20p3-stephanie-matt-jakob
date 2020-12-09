@@ -64,4 +64,18 @@ class TestCombinatorParser extends AnyFunSuite {
   var storeError = MMap[String, Value]()
   val parsedExpr7 = CombinatorParser.parseAll(CombinatorParser.top_level, throwErrorString).get
   test("error on unassigned var test"){ assert(apply(storeError)(parsedExpr7).toString === throwErrorOutput)}
+  
+  //struct test
+  
+  val parsedExpr8 = CombinatorParser.parseAll(CombinatorParser.statement, structString)
+  val parsedExpr9 = CombinatorParser.parseAll(CombinatorParser.statement, selectFieldString)
+  
+  test("struct creation parser test") { assert(parsedExpr8.get === struct) }
+  test("struct select parser test") { assert(parsedExpr9.get === selectField) }
+
+  val parsedExpr10 = CombinatorParser.parseAll(CombinatorParser.statement, assignFieldString)
+  val parsedExpr11 = CombinatorParser.parseAll(CombinatorParser.statement, fieldAddToStructString)
+  
+  //test("struct assign map test") { assert(parsedExpr10.get === assignField) }
+  //test("add field to struct map test") { assert(parsedExpr11.get === fieldAddToStruct) }
 }
