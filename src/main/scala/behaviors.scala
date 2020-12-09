@@ -95,6 +95,15 @@ object behaviors {
     result.toString
   }
 
+  def buildLeftMultiAssignString(prefix: String, nodeString: String, selectorStrings: Seq[String]) = {
+    val result = new StringBuilder(prefix)
+    result.append(nodeString)
+    result.append("(")
+    result.append(selectorStrings.mkString("."))
+    result.append(")")
+    result.toString
+  }
+
   def buildBlockExprString(prefix: String, nodeString: String, exprStrings: String*) = {
     val result = new StringBuilder(prefix)
     result.append(nodeString)
@@ -149,6 +158,7 @@ object behaviors {
     case Div(l, r) => buildExprUnparsed(prefix, " / ", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
     case Mod(l, r) => buildExprUnparsed(prefix, " % ", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
     case Assign(l, r) => buildAssignExprUnparsed(prefix, " = ", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
+    case MultiAssign(l, r) => buildAssignExprUnparsed(prefix, " = ", buildSelectExprUnparsed(prefix, l: _*), toUnparsed(prefix)(r))
     // case Field(k, v) => buildFieldExprUnparsed(prefix, ": ", k, toUnparsed(prefix)(v))
     case Select(selectors @ _*) => {
       buildSelectExprUnparsed(prefix, selectors: _*)
@@ -185,6 +195,15 @@ object behaviors {
   }
 
   def buildAssignExprUnparsed(prefix: String, nodeString: String, leftString: String, rightString: String) = {
+    val result = new StringBuilder(prefix)
+    result.append(leftString)
+    result.append(nodeString)
+    result.append(rightString)
+    result.append(";")
+    result.toString
+  }
+
+  def buildMultiAssignExprUnparsed(prefix: String, nodeString: String, leftString: String, rightString: String) = {
     val result = new StringBuilder(prefix)
     result.append(leftString)
     result.append(nodeString)
@@ -234,15 +253,6 @@ object behaviors {
   //   result.append(")")
   //   result.toString
   // }
-
-  def buildLeftMultiAssignString(prefix: String, nodeString: String, selectorStrings: Seq[String]) = {
-    val result = new StringBuilder(prefix)
-    result.append(nodeString)
-    result.append("(")
-    result.append(selectorStrings.mkString("."))
-    result.append(")")
-    result.toString
-  }
 
   def buildSelectExprUnparsed(prefix: String, selectorStrings: String*) = {
     val result = new StringBuilder()

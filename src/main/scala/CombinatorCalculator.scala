@@ -17,8 +17,8 @@ object CombinatorCalculator extends App {
       println("The parsed expression is: ")
       println(toFormattedString(expr))
       // // println("It has size " + size(expr) + " and height " + height(expr))
-      // println("The unparsed expression is: ")
-      // println(toUnparsed(expr))
+      println("The unparsed expression is: ")
+      println(toUnparsed(expr))
 
       // Doing the execute stuff
       println("Executing the infix expression...")
