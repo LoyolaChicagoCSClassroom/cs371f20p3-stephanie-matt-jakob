@@ -12,10 +12,10 @@ object CombinatorCalculator extends App {
     } else {
       import behaviors._
       val expr = result.get
-      println("Orig expr: ")
-      println(expr)
-      // println("The parsed expression is: ")
-      // println(toFormattedString(expr))
+      // println("Orig expr: ")
+      // println(expr)
+      println("The parsed expression is: ")
+      println(toFormattedString(expr))
       // // println("It has size " + size(expr) + " and height " + height(expr))
       // println("The unparsed expression is: ")
       // println(toUnparsed(expr))
