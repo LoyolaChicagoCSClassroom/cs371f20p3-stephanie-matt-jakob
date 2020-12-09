@@ -16,9 +16,9 @@ object CombinatorParser extends JavaTokenParsers {
     | "+" ~> factor ^^ { case e => e }
     | "-" ~> factor ^^ { case e => UMinus(e) }
     | "(" ~ expr ~ ")" ^^ { case _ ~ e ~ _ => e }
-    | ident ^^ { case i => Variable(i) }
-    | struct
+    | ident <~ not(".") ^^ { case i => Variable(i) } // Prevents ident from matching selectors
     | repsep(ident, ".") ^^ { case i => Select(i: _*) }
+    | struct
     )
 
   /** term ::= factor { { "*" | "/" | "%" } factor }* */
@@ -49,8 +49,8 @@ object CombinatorParser extends JavaTokenParsers {
 
   // assignment: ident "=" expression ";"
   def assignment: Parser[Expr] = (
-    ident ~ "=" ~ expr ~ ";" ^^ { case s ~ _ ~ r ~ _ => Assign(Variable(s), r) }
-    // repsep(ident, ".") ~ "=" ~ expr ~ ";" ^^ { case i ~ _ ~ e ~ _ => Assign(Variable(i: _*), e) }
+      ident ~ "=" ~ expr ~ ";" ^^ { case s ~ _ ~ r ~ _ => Assign(Variable(s), r) }
+      | repsep(ident, ".") ~ "=" ~ expr ~ ";" ^^ { case i ~ _ ~ e ~ _ => Assign(Select(i: _*), e) }
     )
 
   // conditional: "if" "(" expression ")" block [ "else" block ]

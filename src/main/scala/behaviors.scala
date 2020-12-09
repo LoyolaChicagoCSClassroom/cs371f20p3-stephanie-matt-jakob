@@ -61,6 +61,9 @@ object behaviors {
     case Mod(l, r) => buildExprString(prefix, "Mod", toFormattedString(prefix)(l), toFormattedString(prefix)(r))
     case Assign(l, r) => buildExprString(prefix, "Assign", toFormattedString(prefix)(l), toFormattedString(prefix)(r))
     // case Field(k, v) => buildExprString(prefix, "Field", k, toFormattedString(prefix)(v))
+    case Select(selectors @ _*) => {
+      buildSelectExprString(prefix, "Select", selectors: _*)
+    }
     case Block(statements @ _*) => {
       // Block top level, pass in all formated exprs to build urnary string
       val block_list = statements.map(s => toFormattedString(prefix)(s))
@@ -100,6 +103,15 @@ object behaviors {
     result.toString
   }
 
+  def buildSelectExprString(prefix: String, nodeString: String, selectorStrings: String*) = {
+    val result = new StringBuilder(prefix)
+    result.append(nodeString)
+    result.append("(")
+    result.append(selectorStrings.mkString("."))
+    result.append(")")
+    result.toString
+  }
+
   def buildStructExprString(prefix: String, nodeString: String, map: Map[String, Expr]) = {
     val result = new StringBuilder(prefix)
     result.append(nodeString)
@@ -134,6 +146,9 @@ object behaviors {
     case Mod(l, r) => buildExprUnparsed(prefix, " % ", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
     case Assign(l, r) => buildAssignExprUnparsed(prefix, " = ", toUnparsed(prefix)(l), toUnparsed(prefix)(r))
     // case Field(k, v) => buildFieldExprUnparsed(prefix, ": ", k, toUnparsed(prefix)(v))
+    case Select(selectors @ _*) => {
+      buildSelectExprUnparsed(prefix, selectors: _*)
+    }
     case Block(statements @ _*) => {
       // Block top level, pass in all formated exprs to build urnary string
       val block_list = statements.map(s => toUnparsed(prefix + INDENT)(s)) //add indent after prefix
@@ -204,6 +219,12 @@ object behaviors {
     result.append(EOL)
     result.append(prefix)
     result.append("}")
+    result.toString
+  }
+
+  def buildSelectExprUnparsed(prefix: String, selectorStrings: String*) = {
+    val result = new StringBuilder()
+    result.append(selectorStrings.mkString("."))
     result.toString
   }
 
