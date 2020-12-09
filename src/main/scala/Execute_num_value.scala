@@ -18,18 +18,9 @@ object Execute_num_value {
   // the result of a successful or fauled computation 
   type Result = Try[Value]
 
-  /** functions with working with store and Variable. */
-  // checks to see if the name is in the memory hash map aka store
-  // returns true or false
-  def storeHasVariable(store: Store)(s: Expr): Boolean = s match {
-    case Variable(name) => store.contains(name)
-    case _ => false
-  }
-
   def getIns(value: Value): Instance = value match {
     case Ins(x) => x
   }
-  
 
   def putSeqInStore(store: Store)(s: Seq[String])(result: Result): Value = {
     var i = s.iterator.slice(0, s.length-1)
@@ -43,21 +34,10 @@ object Execute_num_value {
     getValuefromResult(result)
   }
 
-
-  // puts a variable into the hashmap has a type Num
-  // the function has a dummy return variable of Num, the important part is that it is now in the store
-  def putVariableinStore(store: Store)(s: Expr)(num: Result): Value = s match {
-    case Variable(name) => { store.put(name.toString(), getValuefromResult(num)); getValuefromResult(num) }
-  }
-
-  // gets the name of the item inside the Variable wrapper
-  def getVariablefromStore(store: Store)(s: Expr): String = s match {
-    case Variable(name) => name
-  }
-
   // gets the int from inside a Num wrapper
   def getIntfromNum(num: Value): Int = num match {
     case Num(x) => x
+    // case Ins(y) => y
   }
 
   // num
@@ -65,7 +45,6 @@ object Execute_num_value {
     case Success(Num(x)) => Num(x)
     case Success(Ins(y)) => Ins(y)
   }
-
 
   /** Looks up a variable in memory. */
   def lookup(store: Store)(name: String): Result =
@@ -88,22 +67,34 @@ object Execute_num_value {
     case Minus(left, right) => binOp(store, left, right, _ - _)
     case Times(left, right) => binOp(store, left, right, _ * _)
     case Div(left, right) => binOp(store, left, right, _ / _)
-    case Variable(name) => lookup(store)(name)
+    // case Variable(name) => lookup(store)(name)
     case MultiAssign(left, right) => {
         val rvalue = apply(store)(right)
         putSeqInStore(store)(left)(rvalue)
         Success(Num(0))
     }
+    case Select(names @ _*) => {
+      var i = names.iterator.slice(0, names.length-1)
+      var current_store = store 
+      // all elements of the inputed list except for the last one are certainly a map, so get to the last map possible
+      while (i.hasNext) {
+          var current_i = i.next()
+          if (current_store.contains(current_i)) {
+            current_store = getIns(current_store(current_i)).asInstanceOf[Store]
+        }
+    }
+    lookup(current_store)(names.last)
+  }
     case Block(ss @ _*) => {
       val i = ss.iterator
-      var result: Int = 0
+      var result: Value = Num(0);
       while (i.hasNext) {
         apply(store)(i.next()) match {
-          case Success(r) => result = getIntfromNum(r)
+          case Success(r) => result = r
           case f @ Failure(_) => return f
         }
       }
-      Success(Num(result))
+      Success(result)
     }
     case Loop(guard, body) => {
       var gvalue = apply(store)(guard)
@@ -176,6 +167,19 @@ object Execute_num_value {
   //   result
   // }
 
+
+  //   // puts a variable into the hashmap has a type Num
+  // // the function has a dummy return variable of Num, the important part is that it is now in the store
+  // def putVariableinStore(store: Store)(s: Expr)(num: Result): Value = s match {
+  //   case Variable(name) => { store.put(name.toString(), getValuefromResult(num)); getValuefromResult(num) }
+  // }
+
+  // // gets the name of the item inside the Variable wrapper
+  // def getVariablefromStore(store: Store)(s: Expr): String = s match {
+  //   case Variable(name) => name
+  // }
+
+
     // case Assign(left, right) => {
     //   if (!storeHasVariable(store)(left)) {
     //     val rvalue_1 = apply(store)(right)
@@ -187,3 +191,11 @@ object Execute_num_value {
     //   }
     //   Success(Num(0))
     // }
+
+  //     /** functions with working with store and Variable. */
+  // // checks to see if the name is in the memory hash map aka store
+  // // returns true or false
+  // def storeHasVariable(store: Store)(s: Expr): Boolean = s match {
+  //   case Variable(name) => store.contains(name)
+  //   case _ => false
+  // }

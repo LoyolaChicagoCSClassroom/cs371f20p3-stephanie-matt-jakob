@@ -20,8 +20,6 @@ case class Loop(guard: Expr, body: Expr) extends Expr
 case class Assign(left: Expr, right: Expr) extends BinaryExpr(left, right)
 
 
-// TODO add require statements 
-case class MultiAssign(left: Seq[String], right: Expr) extends Expr
-case class Select(names: String*) extends Expr
-case class Field(name: String, value: Expr) extends Expr
-case class Struct(map: Map[String, Expr]) extends Expr
+case class MultiAssign(left: Seq[String], right: Expr) extends Expr { require { (left != null ) && (right != null ) }}
+case class Select(names: String*) extends Expr { require {names != null }}
+case class Struct(map: Map[String, Expr]) extends Expr  { require { map != null } }
