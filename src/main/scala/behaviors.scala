@@ -230,18 +230,22 @@ object behaviors {
 
   def buildStructExprUnparsed(prefix: String, map: Map[String, String]) = {
     val result = new StringBuilder()
-    result.append("{ ")
-    val iter = Iterator(map)
-    map.map(kv => {
-      result.append(kv._1)
-      result.append(": ")
-      result.append(kv._2)
-      if(iter.hasNext) { 
-        result.append(", ")
-        iter.next()
-      }
-    })
-    result.append(" }")
+    if(map.isEmpty) result.append("{}")
+    else {
+      result.append("{ ")
+      result.append(map.mkString(", ").replace(" -> ", ": "))
+      result.append(" }")
+    }
+    // val iter = Iterator(map)
+    // map.map(kv => {
+    //   result.append(kv._1)
+    //   result.append(": ")
+    //   result.append(kv._2)
+    //   if(iter.hasNext) { 
+    //     result.append(", ")
+    //     iter.next()
+    //   }
+    // })
     result.toString
   }
 

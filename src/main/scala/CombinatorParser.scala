@@ -16,9 +16,9 @@ object CombinatorParser extends JavaTokenParsers {
     | "+" ~> factor ^^ { case e => e }
     | "-" ~> factor ^^ { case e => UMinus(e) }
     | "(" ~ expr ~ ")" ^^ { case _ ~ e ~ _ => e }
+    | struct
     | ident <~ not(".") ^^ { case i => Variable(i) } // Prevents ident from matching selectors
     | repsep(ident, ".") ^^ { case i => Select(i: _*) }
-    | struct
     )
 
   /** term ::= factor { { "*" | "/" | "%" } factor }* */
