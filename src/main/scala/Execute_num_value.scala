@@ -29,45 +29,6 @@ object Execute_num_value {
   def getIns(value: Value): Instance = value match {
     case Ins(x) => x
   }
-
-  // checks to see if the name is in the memory hash map aka store
-  // returns true or false
-  // used for repl testing: var s:Seq[String] = Seq("res1", "z", "x")
-  // def storeHasSeq(store: Store)(s: Seq[String]): Boolean = {
-  //   var isThere: Boolean = false 
-  //   // if there was only one element this will return an empty list
-  //   var i = s.iterator.slice(0, s.length-1)
-  //   var current_store = store  //.asInstanceOf[Store]
-  //   // all elements of the inputed list except for the last one are certainly a map, so get to the last map possible
-  //   while (i.hasNext) {
-  //       var current_i = i.next()
-  //       if (current_store.contains(current_i)) {
-  //         current_store = getIns(current_store(current_i)).asInstanceOf[Store]
-  //         isThere = true 
-  //       } else {
-  //         isThere = false
-  //       }  
-  //     }
-  //   isThere = current_store.contains(s.last)
-  //   isThere 
-  // }
-
-  // puts variable in store, 
-  // for repl testing:
-  // var z = MMap("x"->1)
-  // var res1 = MMap("z" -> z)
-  // var store = MMap("res1" -> res1)
-  //   def putSeqInStore(store: MMap[String, Any])(s: Seq[String])(result: Int): Int = {
-  //   var i = s.iterator.slice(0, s.length-1)
-  //   if (s.length == 1) {
-  //     store.put(s.last, result) 
-  //   } else {
-  //     if (i.hasNext) {
-  //       putSeqInStore( store(i.next()).asInstanceOf[MMap[String, Any]] )( s.slice(1, s.length) )( result )
-  //     }
-  //   }
-  //   result
-  // }
   
 
   def putSeqInStore(store: Store)(s: Seq[String])(result: Result): Value = {
@@ -175,6 +136,45 @@ object Execute_num_value {
 
 
 // archived
+
+  // checks to see if the name is in the memory hash map aka store
+  // returns true or false
+  // used for repl testing: var s:Seq[String] = Seq("res1", "z", "x")
+  // def storeHasSeq(store: Store)(s: Seq[String]): Boolean = {
+  //   var isThere: Boolean = false 
+  //   // if there was only one element this will return an empty list
+  //   var i = s.iterator.slice(0, s.length-1)
+  //   var current_store = store  //.asInstanceOf[Store]
+  //   // all elements of the inputed list except for the last one are certainly a map, so get to the last map possible
+  //   while (i.hasNext) {
+  //       var current_i = i.next()
+  //       if (current_store.contains(current_i)) {
+  //         current_store = getIns(current_store(current_i)).asInstanceOf[Store]
+  //         isThere = true 
+  //       } else {
+  //         isThere = false
+  //       }  
+  //     }
+  //   isThere = current_store.contains(s.last)
+  //   isThere 
+  // }
+
+  // puts variable in store, 
+  // for repl testing:
+  // var z = MMap("x"->1)
+  // var res1 = MMap("z" -> z)
+  // var store = MMap("res1" -> res1)
+  //   def putSeqInStore(store: MMap[String, Any])(s: Seq[String])(result: Int): Int = {
+  //   var i = s.iterator.slice(0, s.length-1)
+  //   if (s.length == 1) {
+  //     store.put(s.last, result) 
+  //   } else {
+  //     if (i.hasNext) {
+  //       putSeqInStore( store(i.next()).asInstanceOf[MMap[String, Any]] )( s.slice(1, s.length) )( result )
+  //     }
+  //   }
+  //   result
+  // }
 
     // case Assign(left, right) => {
     //   if (!storeHasVariable(store)(left)) {
